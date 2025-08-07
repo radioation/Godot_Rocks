@@ -18,6 +18,12 @@ func _process(delta: float) -> void:
 	position += speed * velocity * delta
 
 
+func reset( pos : Vector2 ) -> void:
+	position = pos;
+	$CollisionShape2D.disabled = false
+	show()
+
+
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("rocks"): 
 		print("CRASH!!")
