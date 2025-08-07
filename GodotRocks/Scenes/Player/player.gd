@@ -1,5 +1,8 @@
 extends Area2D
 
+@export var red_shot_scene : PackedScene
+@export var blue_shot_scene : PackedScene
+
 var can_shoot = true
 var can_shoot_secondary = true
 var screensize
@@ -105,7 +108,16 @@ func read_input() -> void:
 		
 
 func shoot() -> void:
-	pass
+	can_shoot = false
+	var shot = red_shot_scene.instantiate()
+	get_tree().root.add_child(shot)
+	var f_rate = shot.start( $BarrelMarker.global_transform)
 	
 func shoot_secondary() -> void:
-	pass
+	can_shoot_secondary = false
+	var shot = blue_shot_scene.instantiate()
+	get_tree().root.add_child(shot) 
+	var gt = global_transform
+	gt.x = secondary_shot_dir.normalized()
+	gt.y =  gt.x.rotated(1.5708)
+	shot.start( gt )

@@ -1,7 +1,9 @@
-[gd_scene load_steps=68 format=3 uid="uid://dm7abuytgx7os"]
+[gd_scene load_steps=70 format=3 uid="uid://dm7abuytgx7os"]
 
 [ext_resource type="Script" uid="uid://bws1ciykln34d" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://cf1qu800wro2d" path="res://assets/sprites/Ship_000.png" id="1_uvnfx"]
+[ext_resource type="PackedScene" uid="uid://bbfnbb26soduw" path="res://Scenes/RedShot/red_shot.tscn" id="2_d4a23"]
+[ext_resource type="PackedScene" uid="uid://csdh4lnfspa7f" path="res://Scenes/BlueShot/blue_shot.tscn" id="3_hlqkp"]
 [ext_resource type="Script" uid="uid://cdd4eiiceb1wg" path="res://Scenes/Player/player_sprite_2d.gd" id="3_xpcdj"]
 [ext_resource type="Texture2D" uid="uid://b3pyrv3cbbay5" path="res://assets/sprites/ship_frames/Ship_001.png" id="4_vwcno"]
 [ext_resource type="Texture2D" uid="uid://cs5sy53xv5foj" path="res://assets/sprites/ship_frames/Ship_002.png" id="5_u8s58"]
@@ -72,6 +74,8 @@ radius = 17.1172
 
 [node name="Player" type="Area2D"]
 script = ExtResource("1_a3d8c")
+red_shot_scene = ExtResource("2_d4a23")
+blue_shot_scene = ExtResource("3_hlqkp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
@@ -80,10 +84,15 @@ script = ExtResource("3_xpcdj")
 rotation_textures = Array[Texture2D]([ExtResource("1_uvnfx"), ExtResource("4_vwcno"), ExtResource("5_u8s58"), ExtResource("6_d4a23"), ExtResource("7_hlqkp"), ExtResource("8_rbwwl"), ExtResource("9_dbngi"), ExtResource("10_geihd"), ExtResource("11_gs43p"), ExtResource("12_oshob"), ExtResource("13_4h47k"), ExtResource("14_mcfd4"), ExtResource("15_f4of5"), ExtResource("16_8l7e3"), ExtResource("17_hn678"), ExtResource("18_4hadm"), ExtResource("19_q0h8a"), ExtResource("20_mvmwy"), ExtResource("21_wb8kq"), ExtResource("22_oh6x4"), ExtResource("23_qc6x1"), ExtResource("24_bfk3i"), ExtResource("25_hdl7r"), ExtResource("26_mw4px"), ExtResource("27_8rr78"), ExtResource("28_cvvwm"), ExtResource("29_gnhd0"), ExtResource("30_awspn"), ExtResource("31_47nv5"), ExtResource("32_ml2j2"), ExtResource("33_plnq1"), ExtResource("34_i1wx2"), ExtResource("35_jmbrt"), ExtResource("36_6a86w"), ExtResource("37_22q81"), ExtResource("38_81gu5"), ExtResource("39_pf3rq"), ExtResource("40_5opb0"), ExtResource("41_gpqv3"), ExtResource("42_7ve27"), ExtResource("43_ldt7q"), ExtResource("44_7bej3"), ExtResource("45_8b85g"), ExtResource("46_56b0b"), ExtResource("47_w6yxy"), ExtResource("48_2crlr"), ExtResource("49_xvldo"), ExtResource("50_ujqdw"), ExtResource("51_ddxso"), ExtResource("52_yylel"), ExtResource("53_t53un"), ExtResource("54_88f1v"), ExtResource("55_yl4y1"), ExtResource("56_ulp4i"), ExtResource("57_u23kb"), ExtResource("58_8filg"), ExtResource("59_18yym"), ExtResource("60_pxqwv"), ExtResource("61_x3h74"), ExtResource("62_cywur"), ExtResource("63_guy8i"), ExtResource("64_slg74"), ExtResource("65_b37a0"), ExtResource("66_44cd3")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_uvnfx")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 limit_left = 0
 limit_top = 0
 limit_right = 2560
 limit_bottom = 1600
+
+[node name="BarrelMarker" type="Marker2D" parent="."]
+position = Vector2(24, 0)
