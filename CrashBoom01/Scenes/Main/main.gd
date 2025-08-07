@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var rock_scene : PackedScene
+@export var explosion_scene : PackedScene
 
 var screensize = Vector2.ZERO
 var rock_start_y = 0
@@ -25,3 +26,11 @@ func create_rock():
 
 func _on_rock_spawn_timer_timeout() -> void:
 	create_rock()
+
+
+func _on_player_hit() -> void:
+	var explo = explosion_scene.instantiate()
+	explo.position = $Player.position
+	add_child(explo)
+	$ExplosionSound.play()
+	$Player.hide()

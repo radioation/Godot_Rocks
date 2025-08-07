@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://dyp7gsxhjpvwb"]
+[gd_scene load_steps=13 format=3 uid="uid://dyp7gsxhjpvwb"]
 
 [ext_resource type="Texture2D" uid="uid://kqk0ylab0a8u" path="res://assets/Sprites/BOOM_9f_256w.png" id="1_c4e0u"]
+[ext_resource type="Script" uid="uid://b5ssr55qi3rnh" path="res://Scenes/Explosion/explosion.gd" id="2_2ggfy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ggfy"]
 atlas = ExtResource("1_c4e0u")
@@ -68,11 +69,18 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f2hwj")
 }],
-"loop": true,
+"loop": false,
 "name": &"BOOM",
-"speed": 5.0
+"speed": 30.0
 }]
 
 [node name="Explosion" type="AnimatedSprite2D"]
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_iyq6h")
 animation = &"BOOM"
+autoplay = "BOOM"
+frame = 8
+frame_progress = 1.0
+script = ExtResource("2_2ggfy")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

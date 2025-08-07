@@ -1,5 +1,6 @@
 extends Area2D
 
+signal hit
 
 @export var speed = 300
 var velocity = Vector2.ZERO
@@ -22,3 +23,4 @@ func _on_area_entered(area: Area2D) -> void:
 		print("CRASH!!")
 		$CollisionShape2D.set_deferred("disabled", true )
 		hide() 
+		hit.emit()
