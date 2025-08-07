@@ -16,9 +16,6 @@ texture = ExtResource("1_1r6ip")
 
 [node name="Player" parent="." instance=ExtResource("3_qw60k")]
 
-[node name="Rock" parent="." instance=ExtResource("4_5yls4")]
-position = Vector2(532, 2)
-
 [node name="RockSpawnTimer" type="Timer" parent="."]
 
 [connection signal="timeout" from="RockSpawnTimer" to="." method="_on_rock_spawn_timer_timeout"]
