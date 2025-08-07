@@ -9,6 +9,8 @@ func start( pos, vel ) -> void:
 	position = pos  
 	velocity = vel
 	hit_points = 30
+	$AnimatedSprite2D.frame = randi() % 60 
+	$AnimatedSprite2D.play( "Rock" + str( randi() %4 + 1))
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void: 

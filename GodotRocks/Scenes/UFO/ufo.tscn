@@ -130,16 +130,16 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nxw8j"]
-radius = 36.0555
+radius = 29.0689
 
 [node name="UFO" type="Area2D" groups=["ufos"]]
 script = ExtResource("1_prjrd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_5dm0o")
 autoplay = "default"
-frame_progress = 0.746531
+frame_progress = 0.832902
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_nxw8j")

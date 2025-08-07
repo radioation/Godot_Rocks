@@ -7,7 +7,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for i in 20:
+	for i in 35:
 		create_rock()
 	for i in 10:
 		create_ufo()
@@ -21,7 +21,7 @@ func _process(delta: float) -> void:
 
 
 func create_rock() -> void:
-	var vel = Vector2.RIGHT.rotated(randf_range(0, TAU)) * randf_range(5,10)
+	var vel = Vector2.RIGHT.rotated(randf_range(0, TAU)) * randf_range(1.5,2.7)
 	var pos = Vector2( randi_range( 0, 2560), -128 )
 	var rock = rock_scene.instantiate()
 	rock.start(pos, vel)
