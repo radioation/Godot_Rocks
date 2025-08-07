@@ -7,6 +7,7 @@
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_lixft")
+rock_scene = ExtResource("4_5yls4")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 40.0
@@ -17,3 +18,7 @@ texture = ExtResource("1_1r6ip")
 
 [node name="Rock" parent="." instance=ExtResource("4_5yls4")]
 position = Vector2(532, 2)
+
+[node name="RockSpawnTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="RockSpawnTimer" to="." method="_on_rock_spawn_timer_timeout"]
