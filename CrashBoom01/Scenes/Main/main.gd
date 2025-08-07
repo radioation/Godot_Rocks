@@ -5,7 +5,7 @@ extends Node2D
 
 var screensize = Vector2.ZERO
 var rock_start_y : float = 0
-var lives : int = 5
+var lives : int = 3
 var score : int = 0
 
 var playing :bool = false
@@ -13,7 +13,7 @@ var playing :bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screensize = get_viewport().get_visible_rect().size
-	start_game()
+	reset_game()
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -38,16 +38,36 @@ func _on_player_hit() -> void:
 	add_child(explo)
 	$ExplosionSound.play()
 	$Player.hide()
+	$ScoreTimer.stop()
+	$WaitTimer.start()  # small pause after hit
 	
 	lives -= 1
 	print("Lives: " + str(lives))
+	$HUD.update_lives(lives)
+	
+	
+	await $WaitTimer.timeout  # small pause after hit
+	
+	# get rid of all rocks
+	$RockSpawnTimer.stop()
+	get_tree().call_group("rocks", "queue_free")
 
-
+	
+	$Player.reset(  Vector2( screensize.x/ 2, screensize.y - $Player/Sprite2D.texture.get_size().y) )
+	 
+	# wait a bit and start rock timer again
+	$WaitTimer.start()
+	await $WaitTimer.timeout
+	$RockSpawnTimer.start() 
+	$ScoreTimer.start()
+		
 	
 func reset_game() -> void:
 	# reset lives and score
 	lives = 3  
+	$HUD.update_lives(lives)
 	score = 0 
+	$HUD.update_score(score)
 	
 	# place the 
 	$Player.reset(  Vector2( screensize.x/ 2, screensize.y - $Player/Sprite2D.texture.get_size().y) )
@@ -68,3 +88,7 @@ func _on_score_timer_timeout() -> void:
 	 
 	
 	
+
+
+func _on_hud_start() -> void:
+	start_game()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://chvevjwj07dg2"]
+[gd_scene load_steps=8 format=3 uid="uid://chvevjwj07dg2"]
 
 [ext_resource type="Texture2D" uid="uid://bdypce4tqb1jq" path="res://assets/stars.png" id="1_1r6ip"]
 [ext_resource type="Script" uid="uid://dj486f3llaewc" path="res://Scenes/Main/main.gd" id="1_lixft"]
@@ -6,13 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://c3g45qepv8xkw" path="res://Scenes/Player/player.tscn" id="3_qw60k"]
 [ext_resource type="PackedScene" uid="uid://bnd8q7ue56xc7" path="res://Scenes/Rock/rock.tscn" id="4_5yls4"]
 [ext_resource type="AudioStream" uid="uid://gxke88715crs" path="res://assets/Sound/explosion.wav" id="5_p6jpk"]
+[ext_resource type="PackedScene" uid="uid://cblfic0xrpsfn" path="res://Scenes/HUD/hud.tscn" id="7_xlvfx"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_lixft")
 rock_scene = ExtResource("4_5yls4")
 explosion_scene = ExtResource("3_2a143")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("1_1r6ip")
@@ -20,12 +21,20 @@ texture = ExtResource("1_1r6ip")
 [node name="Player" parent="." instance=ExtResource("3_qw60k")]
 
 [node name="RockSpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
 
 [node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_p6jpk")
 
 [node name="ScoreTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="WaitTimer" type="Timer" parent="."]
+wait_time = 0.333
+
+[node name="HUD" parent="." instance=ExtResource("7_xlvfx")]
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="RockSpawnTimer" to="." method="_on_rock_spawn_timer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="start" from="HUD" to="." method="_on_hud_start"]
