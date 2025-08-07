@@ -72,7 +72,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_uvnfx"]
 radius = 17.1172
 
-[node name="Player" type="Area2D"]
+[node name="Player" type="Area2D" groups=["player"]]
 z_index = 10
 script = ExtResource("1_a3d8c")
 red_shot_scene = ExtResource("2_d4a23")
