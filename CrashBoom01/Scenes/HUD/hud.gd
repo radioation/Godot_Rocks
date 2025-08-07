@@ -21,6 +21,15 @@ func update_lives(new_lives: int) -> void:
 func set_message( msg: String ) -> void:
 	$MarginContainer/MessageLabel.text = msg
 
+	
+func game_over() -> void:
+	set_message("GAME OVER!")
+	$MarginContainer/MessageLabel.show()
+	$Timer.start()
+	await $Timer.timeout
+	set_message("CRASH BOOM!")
+	$MarginContainer/MessageLabel.show()
+	$MarginContainer/StartButton.show()
 
 func _on_start_button_pressed() -> void:
 	$MarginContainer/MessageLabel.hide()

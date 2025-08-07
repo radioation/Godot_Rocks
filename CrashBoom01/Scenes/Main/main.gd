@@ -55,12 +55,17 @@ func _on_player_hit() -> void:
 
 	
 	$Player.reset(  Vector2( screensize.x/ 2, screensize.y - $Player/Sprite2D.texture.get_size().y) )
-	 
-	# wait a bit and start rock timer again
-	$WaitTimer.start()
-	await $WaitTimer.timeout
-	$RockSpawnTimer.start() 
-	$ScoreTimer.start()
+	
+	if lives <= 0:
+		# 0 lives, game over.
+		playing = false
+		$HUD.game_over()
+	else:
+		# Keep playing. Wait a bit and start rock timer again
+		$WaitTimer.start()
+		await $WaitTimer.timeout
+		$RockSpawnTimer.start() 
+		$ScoreTimer.start()
 		
 	
 func reset_game() -> void:
@@ -70,7 +75,7 @@ func reset_game() -> void:
 	score = 0 
 	$HUD.update_score(score)
 	
-	# place the 
+	# place the player
 	$Player.reset(  Vector2( screensize.x/ 2, screensize.y - $Player/Sprite2D.texture.get_size().y) )
 	
 	

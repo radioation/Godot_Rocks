@@ -56,4 +56,7 @@ size_flags_vertical = 8
 theme_override_font_sizes/font_size = 64
 text = "Start"
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
 [connection signal="pressed" from="MarginContainer/StartButton" to="." method="_on_start_button_pressed"]

@@ -21,16 +21,16 @@ texture = ExtResource("1_1r6ip")
 [node name="Player" parent="." instance=ExtResource("3_qw60k")]
 
 [node name="RockSpawnTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.333
 
 [node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_p6jpk")
 
 [node name="ScoreTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 2.5
 
 [node name="WaitTimer" type="Timer" parent="."]
-wait_time = 0.333
+wait_time = 2.0
 
 [node name="HUD" parent="." instance=ExtResource("7_xlvfx")]
 
