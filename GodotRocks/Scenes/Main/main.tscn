@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://cc62jaeqqcneu"]
+[gd_scene load_steps=5 format=3 uid="uid://cc62jaeqqcneu"]
 
 [ext_resource type="Texture2D" uid="uid://cosln12vsknok" path="res://assets/bg/bg.png" id="1_1r6ip"]
 [ext_resource type="Script" uid="uid://cflhyxqj4lfek" path="res://Scenes/Main/main.gd" id="1_qw60k"]
+[ext_resource type="PackedScene" uid="uid://c2fco36kw2sn5" path="res://Scenes/Rock/rock.tscn" id="2_5yls4"]
 [ext_resource type="PackedScene" uid="uid://dm7abuytgx7os" path="res://Scenes/Player/player.tscn" id="2_lixft"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_qw60k")
+rock_scene = ExtResource("2_5yls4")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 40.0
