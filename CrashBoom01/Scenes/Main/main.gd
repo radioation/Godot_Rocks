@@ -37,6 +37,7 @@ func _on_player_hit() -> void:
 	explo.position = $Player.position
 	add_child(explo)
 	$ExplosionSound.play()
+	print("BOOM!!")
 	$Player.hide()
 	$ScoreTimer.stop()
 	$WaitTimer.start()  # small pause after hit
@@ -85,10 +86,12 @@ func start_game() -> void:
 func _on_score_timer_timeout() -> void:
 	score += 10 
 	print("Score: " + str(score))
+	$HUD.update_score(score)
 	 
 	
 	
 
+ 
 
 func _on_hud_start() -> void:
 	start_game()
