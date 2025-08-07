@@ -2,7 +2,7 @@ extends Area2D
 
 
 @export var speed = 1000
-@export var fire_rate = 0.1
+@export var fire_rate = 0.07
 var velocity = Vector2.ZERO
 
 func start(xform ) -> float:
@@ -21,3 +21,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	position += velocity * delta
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	queue_free()

@@ -112,7 +112,10 @@ func shoot() -> void:
 	var shot = red_shot_scene.instantiate()
 	get_tree().root.add_child(shot)
 	var f_rate = shot.start( $BarrelMarker.global_transform)
-	
+
+	$ShotCooldownTimer.wait_time = f_rate
+	$ShotCooldownTimer.start()
+		
 func shoot_secondary() -> void:
 	can_shoot_secondary = false
 	var shot = blue_shot_scene.instantiate()
@@ -120,4 +123,15 @@ func shoot_secondary() -> void:
 	var gt = global_transform
 	gt.x = secondary_shot_dir.normalized()
 	gt.y =  gt.x.rotated(1.5708)
-	shot.start( gt )
+	var f_rate = shot.start( gt )
+	
+	$SecondaryShotCooldownTimer.wait_time = f_rate
+	$SecondaryShotCooldownTimer.start()
+
+
+func _on_shot_cooldown_timer_timeout() -> void:
+	can_shoot = true
+
+
+func _on_secondary_shot_cooldown_timer_timeout() -> void:
+	can_shoot_secondary = true  

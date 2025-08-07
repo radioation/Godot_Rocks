@@ -73,9 +73,12 @@
 radius = 17.1172
 
 [node name="Player" type="Area2D"]
+z_index = 10
 script = ExtResource("1_a3d8c")
 red_shot_scene = ExtResource("2_d4a23")
 blue_shot_scene = ExtResource("3_hlqkp")
+
+[node name="SecondaryShotCooldownTimer" type="Timer" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
@@ -96,3 +99,8 @@ limit_bottom = 1600
 
 [node name="BarrelMarker" type="Marker2D" parent="."]
 position = Vector2(24, 0)
+
+[node name="ShotCooldownTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="SecondaryShotCooldownTimer" to="." method="_on_secondary_shot_cooldown_timer_timeout"]
+[connection signal="timeout" from="ShotCooldownTimer" to="." method="_on_shot_cooldown_timer_timeout"]
