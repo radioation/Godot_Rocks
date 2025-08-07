@@ -1,10 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://cc62jaeqqcneu"]
+[gd_scene load_steps=4 format=3 uid="uid://cc62jaeqqcneu"]
 
 [ext_resource type="Texture2D" uid="uid://cosln12vsknok" path="res://assets/bg/bg.png" id="1_1r6ip"]
+[ext_resource type="Script" uid="uid://cflhyxqj4lfek" path="res://Scenes/Main/main.gd" id="1_qw60k"]
+[ext_resource type="PackedScene" uid="uid://dm7abuytgx7os" path="res://Scenes/Player/player.tscn" id="2_lixft"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_qw60k")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("1_1r6ip")
+
+[node name="Player" parent="." instance=ExtResource("2_lixft")]
