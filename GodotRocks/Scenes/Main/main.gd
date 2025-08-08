@@ -7,9 +7,9 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for i in 35:
+	for i in 20:
 		create_rock()
-	for i in 10:
+	for i in 5:
 		create_ufo()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

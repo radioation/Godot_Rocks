@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://uw4ew7wn3ncb"]
+[gd_scene load_steps=23 format=3 uid="uid://uw4ew7wn3ncb"]
 
 [ext_resource type="Texture2D" uid="uid://blyg24nuclubk" path="res://assets/sprites/combinedUFO_8f_256w.png" id="1_ouq1r"]
 [ext_resource type="Script" uid="uid://kwwrvlgii6sa" path="res://Scenes/UFO/ufo.gd" id="1_prjrd"]
 [ext_resource type="Texture2D" uid="uid://6g57iyjs3lei" path="res://assets/sprites/combinedSmallUFO_8f_168w.png" id="2_i4ria"]
+[ext_resource type="PackedScene" uid="uid://cjekoxpmx0qnn" path="res://Scenes/Explosion/explosion.tscn" id="4_jiqr7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4ria"]
 atlas = ExtResource("1_ouq1r")
@@ -143,3 +144,8 @@ frame_progress = 0.832902
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_nxw8j")
+
+[node name="Explosion" parent="." instance=ExtResource("4_jiqr7")]
+visible = false
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

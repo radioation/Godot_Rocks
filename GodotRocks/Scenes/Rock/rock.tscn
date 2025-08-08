@@ -1,10 +1,11 @@
-[gd_scene load_steps=248 format=3 uid="uid://c2fco36kw2sn5"]
+[gd_scene load_steps=249 format=3 uid="uid://c2fco36kw2sn5"]
 
 [ext_resource type="Script" uid="uid://b6n301bw3dfsd" path="res://Scenes/Rock/rock.gd" id="1_0gmrd"]
 [ext_resource type="Texture2D" uid="uid://7mlh485gmsix" path="res://assets/sprites/rocks/rock1_sheet.png" id="1_1cgox"]
 [ext_resource type="Texture2D" uid="uid://bq2qjk0l472a8" path="res://assets/sprites/rocks/rock2_sheet.png" id="2_0gmrd"]
 [ext_resource type="Texture2D" uid="uid://b1lb8c3he67n4" path="res://assets/sprites/rocks/rock3_sheet.png" id="3_qivvq"]
 [ext_resource type="Texture2D" uid="uid://dnkkmonpvlhec" path="res://assets/sprites/rocks/rock4_sheet.png" id="4_mulqw"]
+[ext_resource type="PackedScene" uid="uid://cjekoxpmx0qnn" path="res://Scenes/Explosion/explosion.tscn" id="6_qivvq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5gfxh"]
 atlas = ExtResource("1_1cgox")
@@ -1712,14 +1713,18 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_1cgox"]
 radius = 42.0476
 
-[node name="Rock" type="Area2D"]
+[node name="Rock" type="Area2D" groups=["rocks"]]
 script = ExtResource("1_0gmrd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.35, 0.35)
 sprite_frames = SubResource("SpriteFrames_qnqnk")
-animation = &"Rock1"
-frame_progress = 0.412323
+animation = &"Rock4"
+frame_progress = 0.942857
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1cgox")
+
+[node name="Explosion" parent="." instance=ExtResource("6_qivvq")]
+visible = false
+autoplay = ""

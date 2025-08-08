@@ -3,12 +3,13 @@ extends Area2D
 
 @export var speed = 1000
 @export var fire_rate = 0.07
+@export var shot_damage = 1
 var velocity = Vector2.ZERO
 
 func start(xform ) -> float:
 	transform = xform
-	print( "BLUE transform,x " + str(transform.x))
-	print( "BLUE transform " + str(transform))
+	#print( "BLUE transform,x " + str(transform.x))
+	#print( "BLUE transform " + str(transform))
 	velocity = transform.x * speed
 	return fire_rate
 	
@@ -25,3 +26,12 @@ func _process(delta: float) -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
+
+
+func _on_area_entered(area: Area2D) -> void: 
+	if area.is_in_group("ufos"):
+		area.hit(shot_damage)
+		queue_free()
+	if area.is_in_group("rocks"):
+		area.explode()
+		queue_free()

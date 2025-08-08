@@ -1,9 +1,9 @@
-[gd_scene load_steps=70 format=3 uid="uid://dm7abuytgx7os"]
+[gd_scene load_steps=71 format=3 uid="uid://dm7abuytgx7os"]
 
 [ext_resource type="Script" uid="uid://bws1ciykln34d" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://cf1qu800wro2d" path="res://assets/sprites/Ship_000.png" id="1_uvnfx"]
-[ext_resource type="PackedScene" uid="uid://bbfnbb26soduw" path="res://Scenes/RedShot/red_shot.tscn" id="2_d4a23"]
 [ext_resource type="PackedScene" uid="uid://csdh4lnfspa7f" path="res://Scenes/BlueShot/blue_shot.tscn" id="3_hlqkp"]
+[ext_resource type="PackedScene" uid="uid://dk3emfvbayel6" path="res://Scenes/GreenShot/green_shot.tscn" id="3_rbwwl"]
 [ext_resource type="Script" uid="uid://cdd4eiiceb1wg" path="res://Scenes/Player/player_sprite_2d.gd" id="3_xpcdj"]
 [ext_resource type="Texture2D" uid="uid://b3pyrv3cbbay5" path="res://assets/sprites/ship_frames/Ship_001.png" id="4_vwcno"]
 [ext_resource type="Texture2D" uid="uid://cs5sy53xv5foj" path="res://assets/sprites/ship_frames/Ship_002.png" id="5_u8s58"]
@@ -68,6 +68,7 @@
 [ext_resource type="Texture2D" uid="uid://6aomy6h4x8vl" path="res://assets/sprites/ship_frames/Ship_061.png" id="64_slg74"]
 [ext_resource type="Texture2D" uid="uid://1ql2smih2fel" path="res://assets/sprites/ship_frames/Ship_062.png" id="65_b37a0"]
 [ext_resource type="Texture2D" uid="uid://dmme0ske6nl10" path="res://assets/sprites/ship_frames/Ship_063.png" id="66_44cd3"]
+[ext_resource type="PackedScene" uid="uid://cjekoxpmx0qnn" path="res://Scenes/Explosion/explosion.tscn" id="69_hlqkp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uvnfx"]
 radius = 17.1172
@@ -75,7 +76,7 @@ radius = 17.1172
 [node name="Player" type="Area2D" groups=["player"]]
 z_index = 10
 script = ExtResource("1_a3d8c")
-red_shot_scene = ExtResource("2_d4a23")
+green_shot_scene = ExtResource("3_rbwwl")
 blue_shot_scene = ExtResource("3_hlqkp")
 
 [node name="SecondaryShotCooldownTimer" type="Timer" parent="."]
@@ -102,5 +103,9 @@ position = Vector2(24, 0)
 
 [node name="ShotCooldownTimer" type="Timer" parent="."]
 
+[node name="Explosion" parent="." instance=ExtResource("69_hlqkp")]
+visible = false
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="SecondaryShotCooldownTimer" to="." method="_on_secondary_shot_cooldown_timer_timeout"]
 [connection signal="timeout" from="ShotCooldownTimer" to="." method="_on_shot_cooldown_timer_timeout"]

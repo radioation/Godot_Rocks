@@ -13,7 +13,7 @@ var max_force : float = 0.0
 var max_speed : float = 0.0
 var radius : float = 20.0
 
-
+var hit_points = 20
  
 	
 # Called when the node enters the scene tree for the first time.
@@ -83,3 +83,22 @@ func seek_target_weighted(delta: float, target_position: Vector2, weight: float)
 	steer = steer.limit_length(max_force) 
 	acceleration += steer 
 	acceleration *= weight
+
+
+func hit( value ): 
+	hit_points -= value 
+	if hit_points <= 0:
+		explode()
+
+
+func explode():  
+	$CollisionShape2D.set_deferred("disabled", true )
+	$AnimatedSprite2D.hide()
+	$Explosion.show()
+	$Explosion.play()
+	await $Explosion.animation_finished
+	queue_free()
+
+
+func _on_area_entered(area: Area2D) -> void:
+	pass # Replace with function body.

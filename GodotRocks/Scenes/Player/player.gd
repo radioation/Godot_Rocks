@@ -1,6 +1,11 @@
 extends Area2D
 
-@export var red_shot_scene : PackedScene
+# signals 
+signal lives_changed
+signal hit_points_changed
+signal death
+
+@export var green_shot_scene : PackedScene
 @export var blue_shot_scene : PackedScene
 
 var can_shoot = true
@@ -27,6 +32,11 @@ var shot_dir = Vector2.ZERO
 var secondary_shot_dir = Vector2.ZERO
 
 var radius :float = 0.0
+
+
+@export var max_hit_points = 100
+var hit_points = 0 : set = set_hit_points 
+var lives = 0 : set = set_lives
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -70,7 +80,7 @@ func _physics_process(delta: float) -> void:
 	var dv = velocity * -0.012
 	velocity += dv
 		
-	print("VELOCITY: " + str(velocity) )
+	#print("VELOCITY: " + str(velocity) )
 	position += velocity * delta
 	
 	if position.x < 0:
@@ -109,7 +119,7 @@ func read_input() -> void:
 
 func shoot() -> void:
 	can_shoot = false
-	var shot = red_shot_scene.instantiate()
+	var shot = green_shot_scene.instantiate()
 	get_tree().root.add_child(shot)
 	var f_rate = shot.start( $BarrelMarker.global_transform)
 
@@ -135,3 +145,34 @@ func _on_shot_cooldown_timer_timeout() -> void:
 
 func _on_secondary_shot_cooldown_timer_timeout() -> void:
 	can_shoot_secondary = true  
+
+
+func set_lives( value ):
+	lives = value
+	lives_changed.emit(lives) 
+	if lives <= 0:
+		set_state(DEAD)
+	else:
+		set_state(INVUL)
+	hit_points = max_hit_points
+	
+func set_hit_points( value ): 
+	hit_points = value
+	hit_points_changed.emit( hit_points / max_hit_points )
+	if hit_points <= 0:
+		lives -= 1
+		death.emit()
+		explode()
+
+
+func explode():
+	$Explosion.show()
+	$Explosion.play()
+	await $Explosion.animation_finished
+	$Explosion.hide()
+
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group( "rocks" ): 
+		hit_points = 0
+		area.explode()

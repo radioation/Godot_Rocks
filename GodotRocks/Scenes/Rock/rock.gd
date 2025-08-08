@@ -1,5 +1,7 @@
 extends Area2D
- 
+
+signal exploded
+
 var radius = 128
 var velocity: Vector2= Vector2.ZERO
 
@@ -33,3 +35,16 @@ func _physics_process(delta: float) -> void:
 	elif position.y > 1600:
 		position.y = 0
  
+
+func explode():
+	$CollisionShape2D.set_deferred("disabled", true )
+	
+	$AnimatedSprite2D.hide()
+	$Explosion.play()
+	$Explosion.show()
+	
+	exploded.emit( )
+ 
+	await $Explosion.animation_finished
+	
+	queue_free()
