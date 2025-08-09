@@ -78,7 +78,7 @@ script = ExtResource("1_2wmys")
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_8m7bv")
 autoplay = "default"
-frame_progress = 0.584682
+frame_progress = 0.304622
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["ufos"]]
 shape = SubResource("CircleShape2D_bq82t")

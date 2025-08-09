@@ -13,7 +13,7 @@ var max_force : float = 0.0
 var max_speed : float = 0.0
 var radius : float = 0.0
 
-var hit_points = 20
+var hit_points = 10
  
 	
 # Called when the node enters the scene tree for the first time.

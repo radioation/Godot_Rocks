@@ -25,7 +25,3 @@ texture = ExtResource("5_ciybh")
 
 [node name="UfoTimer" type="Timer" parent="."]
 wait_time = 30.0
-
-[node name="Timer" type="Timer" parent="."]
-
-[connection signal="timeout" from="UfoTimer" to="." method="_on_ufo_timer_timeout"]
