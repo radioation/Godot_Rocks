@@ -5,6 +5,8 @@ class_name Ufo
 
 @export var target: Area2D = null
 
+enum { SAUNTER, FLEE }
+
 var velocity: Vector2= Vector2.ZERO
 var heading: Vector2 = Vector2(1,0)
 var side: Vector2 = Vector2(0,1)
@@ -50,7 +52,7 @@ func _physics_process(delta: float) -> void:
 	acceleration = Vector2.ZERO
 
 func separate_weighted(delta: float, weight: float) -> void:
-	var desired_separation : float= radius * 3
+	var desired_separation : float= radius * 3.0
 	
 	var sum = Vector2.ZERO 
 	var count : int = 0

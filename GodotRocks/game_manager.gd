@@ -22,11 +22,15 @@ func reset() -> void:
 	current_level = 0
 	get_tree().change_scene_to_file(main_scene)
 	
-	
+
+func start_level( level : int ) : 
+	# create rocks (10 to start, + 5 * level )
+	create_rocks( 10 + 5 * level )
 
 func start_game() -> void:
 	current_level = 0
-	get_tree().change_scene_to_file(game_scene)
+	get_tree().change_scene_to_file(game_scene) 
+	
 
 	
 func create_rocks_in_range( count: int, max_x: int, max_y: int ) -> void:
@@ -47,7 +51,7 @@ func create_rocks_in_range( count: int, max_x: int, max_y: int ) -> void:
 		rock.start(pos, vel)
 		get_tree().current_scene.add_child( rock )
 		
-func create_rocks( count: int, size: float) -> void:
+func create_rocks( count: int ) -> void:
 	create_rocks_in_range( count, playarea.x, playarea.y) 
 	
 	#@call_deferred("add_child", rock)

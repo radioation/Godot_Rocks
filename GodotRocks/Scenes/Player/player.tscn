@@ -108,10 +108,11 @@ position = Vector2(24, 0)
 visible = false
 
 [node name="InvulTimer" type="Timer" parent="."]
+wait_time = 3.0
 
 [node name="ThrustSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("70_rbwwl")
-volume_db = 3.2
+volume_db = -3.564
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="SecondaryShotCooldownTimer" to="." method="_on_secondary_shot_cooldown_timer_timeout"]

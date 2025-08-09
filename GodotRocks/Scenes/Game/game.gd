@@ -3,6 +3,7 @@ extends Node2D
 @export var rock_scene : PackedScene
 
 @export var ufo_scene : PackedScene
+@export var small_ufo_scene : PackedScene
 
 
 # Called when the node enters the scene tree for the first time.
@@ -11,9 +12,11 @@ func _ready() -> void:
 	$HUD/VBoxContainer/MessageLabel.hide()
 	#for i in 20:
 		#create_rock()
-		#
-	#for i in 5:
-		#create_ufo()
+		##
+	for i in 5:
+		create_ufo()
+	for i in  15:
+		create_small_ufo()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void: 
@@ -22,18 +25,23 @@ func _process(delta: float) -> void:
 		show_exit_confirmation_dialog()
 
 
-func create_rock() -> void:
-	var vel = Vector2.RIGHT.rotated(randf_range(0, TAU)) * randf_range(1.5,2.7)
-	var pos = Vector2( randi_range( 0, 2560), -128 )
-	var rock = rock_scene.instantiate()
-	rock.start(pos, vel)
-	call_deferred("add_child", rock)
+ 
 	
 	
 func create_ufo() -> void: 
 
 	var pos = Vector2( randi_range( 0, 2560),randi_range (0, 1600) )
 	var u = ufo_scene.instantiate()  
+	u.position = pos
+	 
+	#ufo.max_force = 5500
+	call_deferred("add_child", u)
+
+	
+func create_small_ufo() -> void: 
+
+	var pos = Vector2( randi_range( 0, 2560),randi_range (0, 1600) )
+	var u = small_ufo_scene.instantiate()  
 	u.position = pos
 	 
 	#ufo.max_force = 5500

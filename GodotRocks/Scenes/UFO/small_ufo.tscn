@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://cya01t5l5w62g"]
+[gd_scene load_steps=14 format=3 uid="uid://cya01t5l5w62g"]
 
 [ext_resource type="Script" uid="uid://b16kgny6ta3mo" path="res://Scenes/UFO/small_ufo.gd" id="1_2wmys"]
 [ext_resource type="Texture2D" uid="uid://6g57iyjs3lei" path="res://assets/sprites/combinedSmallUFO_8f_168w.png" id="2_bq82t"]
+[ext_resource type="PackedScene" uid="uid://cjekoxpmx0qnn" path="res://Scenes/Explosion/explosion.tscn" id="3_e23do"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e23do"]
 atlas = ExtResource("2_bq82t")
@@ -70,14 +71,17 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_bq82t"]
 radius = 21.2132
 
-[node name="SmallUFO" type="Area2D"]
+[node name="SmallUFO" type="Area2D" groups=["ufos"]]
 script = ExtResource("1_2wmys")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_8m7bv")
 autoplay = "default"
-frame_progress = 0.860955
+frame_progress = 0.584682
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["ufos"]]
 shape = SubResource("CircleShape2D_bq82t")
+
+[node name="Explosion" parent="." instance=ExtResource("3_e23do")]
+visible = false

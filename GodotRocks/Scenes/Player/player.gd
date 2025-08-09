@@ -29,7 +29,7 @@ var rotation_dir :float = 0.0
 
 var shot_dir = Vector2.ZERO
 var secondary_shot_dir = Vector2.ZERO
-
+var half_screen = Vector2.ZERO
 var radius :float = 0.0
 
 
@@ -43,7 +43,7 @@ func _ready() -> void:
 	set_state( ALIVE )
 	#$ShotCooldownTimer.wait_time = 0;
 	radius = $CollisionShape2D.shape.radius
-
+	half_screen = get_viewport().size / 2.0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -55,13 +55,17 @@ func set_state( new_state ) -> void:
 	match new_state:
 		INIT: 
 			$CollisionShape2D.set_deferred("disabled", true)
+			$Sprite2D.modulate.a = 0.5
 		ALIVE: 
 			$CollisionShape2D.set_deferred("disabled", false)
+			$Sprite2D.modulate.a =1.0
 		INVUL: 
 			$CollisionShape2D.set_deferred("disabled", true)
+			$Sprite2D.modulate.a = 0.5
 		DEAD: 
 			$CollisionShape2D.set_deferred("disabled", true)
 			$Sprite2D.hide() 
+			velocity = Vector2.ZERO
 			$ThrustSound.stop() 
 	curr_state = new_state
 
@@ -114,10 +118,21 @@ func read_input() -> void:
 	
 	if Input.is_action_pressed("shoot") and can_shoot:
 		shoot()
+	
+	if Input.is_action_pressed("shoot_2nd") and can_shoot_secondary:
+		var cam = get_viewport().get_camera_2d(); 
+		var mp = get_viewport().get_mouse_position()
+		var rel_mp = mp + cam.get_screen_center_position() - half_screen
+ 
+		secondary_shot_dir = rel_mp - get_global_transform().origin
+	else:
+		secondary_shot_dir = Input.get_vector("left_2nd", "right_2nd", "up_2nd", "down_2nd")
 		
-	secondary_shot_dir = Input.get_vector("left_2nd", "right_2nd", "up_2nd", "down_2nd")
 	if secondary_shot_dir.length() > 0.2 and can_shoot_secondary:
 		shoot_secondary()
+ 
+
+ 
 		
 
 func shoot() -> void:
@@ -141,7 +156,7 @@ func shoot_secondary() -> void:
 	$SecondaryShotCooldownTimer.wait_time = f_rate
 	$SecondaryShotCooldownTimer.start()
 
-
+ 
 func _on_shot_cooldown_timer_timeout() -> void:
 	can_shoot = true
 
@@ -164,8 +179,8 @@ func set_hit_points( value ):
 	hit_points_changed.emit( hit_points / max_hit_points )
 	if hit_points <= 0:
 		lives -= 1
-		death.emit()
-		explode()
+		set_state(DEAD)
+		explode() 
 
 
 func explode():
