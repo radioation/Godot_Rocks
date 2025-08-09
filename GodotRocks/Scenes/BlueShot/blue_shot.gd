@@ -3,7 +3,7 @@ extends Area2D
 
 @export var speed = 1000
 @export var fire_rate = 0.07
-@export var shot_damage = 1
+@export var shot_damage = 0.5
 var velocity = Vector2.ZERO
 
 func start(xform ) -> float:
@@ -16,7 +16,7 @@ func start(xform ) -> float:
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	$ShotSound.play()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,5 +33,5 @@ func _on_area_entered(area: Area2D) -> void:
 		area.hit(shot_damage)
 		queue_free()
 	if area.is_in_group("rocks"):
-		area.explode()
+		area.hit(shot_damage)
 		queue_free()

@@ -63,6 +63,8 @@ func set_state( new_state ) -> void:
 			$CollisionShape2D.set_deferred("disabled", true)
 		DEAD: 
 			$CollisionShape2D.set_deferred("disabled", true)
+			$Sprite2D.hide() 
+			$ThrustSound.stop() 
 	curr_state = new_state
 
 
@@ -71,6 +73,8 @@ func _physics_process(delta: float) -> void:
 	rotation += rotation_dir * rotation_speed * delta
 	
 	if thrust > 0.0 :
+		if $ThrustSound.playing == false:
+			$ThrustSound.play() 
 		var thrust_vector = Vector2( cos(rotation), sin(rotation)).normalized()
 		velocity += thrust_vector * thrust * delta
 		if velocity.length() > max_speed:
@@ -105,6 +109,9 @@ func read_input() -> void:
 		return
 	if Input.is_action_pressed("thrust"):
 		thrust = acceleration * Input.get_action_strength("thrust")
+	else:
+		$ThrustSound.stop() 
+			
 		
 	rotation_dir = Input.get_axis("left", "right")
 	
@@ -176,3 +183,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group( "rocks" ): 
 		hit_points = 0
 		area.explode()
+
+
+func _on_invul_timer_timeout() -> void:
+	set_state( ALIVE ) # Replace with function body.

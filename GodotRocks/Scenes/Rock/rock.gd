@@ -5,13 +5,13 @@ signal exploded
 var radius = 128
 var velocity: Vector2= Vector2.ZERO
 
-var hit_points = 30
+var hit_points = 15
 
 func start( pos, vel ) -> void:
 	position = pos  
 	velocity = vel
 	hit_points = 30
-	$AnimatedSprite2D.frame = randi() % 60 
+	$AnimatedSprite2D.frame = randi() % 5 * 10 
 	$AnimatedSprite2D.play( "Rock" + str( randi() %4 + 1))
 	
 # Called when the node enters the scene tree for the first time.
@@ -36,11 +36,19 @@ func _physics_process(delta: float) -> void:
 		position.y = 0
  
 
+func hit( value ): 
+	hit_points -= value 
+	$HitSound.play()
+	if hit_points <= 0:
+		explode()
+
+
 func explode():
 	$CollisionShape2D.set_deferred("disabled", true )
 	
 	$AnimatedSprite2D.hide()
 	$Explosion.play()
+	$ExplosionSound.play()
 	$Explosion.show()
 	
 	exploded.emit( )

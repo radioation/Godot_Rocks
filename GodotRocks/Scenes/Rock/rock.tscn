@@ -1,4 +1,4 @@
-[gd_scene load_steps=249 format=3 uid="uid://c2fco36kw2sn5"]
+[gd_scene load_steps=251 format=3 uid="uid://c2fco36kw2sn5"]
 
 [ext_resource type="Script" uid="uid://b6n301bw3dfsd" path="res://Scenes/Rock/rock.gd" id="1_0gmrd"]
 [ext_resource type="Texture2D" uid="uid://7mlh485gmsix" path="res://assets/sprites/rocks/rock1_sheet.png" id="1_1cgox"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://b1lb8c3he67n4" path="res://assets/sprites/rocks/rock3_sheet.png" id="3_qivvq"]
 [ext_resource type="Texture2D" uid="uid://dnkkmonpvlhec" path="res://assets/sprites/rocks/rock4_sheet.png" id="4_mulqw"]
 [ext_resource type="PackedScene" uid="uid://cjekoxpmx0qnn" path="res://Scenes/Explosion/explosion.tscn" id="6_qivvq"]
+[ext_resource type="AudioStream" uid="uid://brqyqd310112c" path="res://assets/sounds/explosion.wav" id="7_mulqw"]
+[ext_resource type="AudioStream" uid="uid://6ar1ct7ck53l" path="res://assets/sounds/Laser_Shoot17_breaker.wav" id="8_5gfxh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5gfxh"]
 atlas = ExtResource("1_1cgox")
@@ -1728,3 +1730,10 @@ shape = SubResource("CircleShape2D_1cgox")
 [node name="Explosion" parent="." instance=ExtResource("6_qivvq")]
 visible = false
 autoplay = ""
+
+[node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_mulqw")
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_5gfxh")
+volume_db = -2.133

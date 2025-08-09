@@ -9,8 +9,8 @@ extends Node2D
 func _ready() -> void:
 	for i in 20:
 		create_rock()
-	for i in 5:
-		create_ufo()
+	#for i in 5:
+		#create_ufo()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
