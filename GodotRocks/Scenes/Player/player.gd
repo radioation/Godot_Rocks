@@ -9,8 +9,7 @@ signal death
 @export var blue_shot_scene : PackedScene
 
 var can_shoot = true
-var can_shoot_secondary = true
-var screensize
+var can_shoot_secondary = true 
 
 enum { INIT, ALIVE, INVUL, DEAD }
 var curr_state = INIT
@@ -19,7 +18,7 @@ var curr_state = INIT
 
 @export var max_speed : float = 900.0
 @export var acceleration : float = 450.0
-@export var rotation_speed : float = 5.8
+@export var rotation_speed : float = 5.0
 @export var drag = 0.975
 
 
@@ -39,9 +38,8 @@ var hit_points = 0 : set = set_hit_points
 var lives = 0 : set = set_lives
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	screensize = get_viewport_rect().size
-	position = screensize / 2.0
+func _ready() -> void: 
+	position = GameManager.playarea / 2.0
 	set_state( ALIVE )
 	#$ShotCooldownTimer.wait_time = 0;
 	radius = $CollisionShape2D.shape.radius
@@ -90,17 +88,15 @@ func _physics_process(delta: float) -> void:
 	if position.x < 0:
 		position.x = 0
 		velocity.x = 0
-	elif position.x > 2559:
-		position.x = 2559
+	elif position.x > GameManager.playarea.x:
+		position.x = GameManager.playarea.x
 		velocity.x = 0
 	if position.y < 0:
 		position.y = 0
 		velocity.y = 0
-	elif position.y > 1600:
-		position.y = 1600
-		velocity.y = 0
-	#position.x = wrapf( position.x, 0-radius, screensize.x  + radius)
-	#position.y = wrapf( position.y, 0-radius, screensize.y + radius)
+	elif position.y > GameManager.playarea.y:
+		position.y = GameManager.playarea.y
+		velocity.y = 0 
 	
 	
 func read_input() -> void:

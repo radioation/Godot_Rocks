@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var speed = 800
-@export var fire_rate = 0.3
+@export var fire_rate = 0.333333
 @export var damage = 10
 
 var velocity = Vector2.ZERO

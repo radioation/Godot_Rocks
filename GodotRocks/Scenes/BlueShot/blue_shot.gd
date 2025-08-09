@@ -2,21 +2,22 @@ extends Area2D
 
 
 @export var speed = 1000
-@export var fire_rate = 0.07
-@export var shot_damage = 0.5
+@export var fire_rate = 0.1
+@export var shot_damage = 3.0
 var velocity = Vector2.ZERO
 
 func start(xform ) -> float:
 	transform = xform
 	#print( "BLUE transform,x " + str(transform.x))
 	#print( "BLUE transform " + str(transform))
+	$ShotSound.play()
 	velocity = transform.x * speed
 	return fire_rate
 	
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$ShotSound.play()
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

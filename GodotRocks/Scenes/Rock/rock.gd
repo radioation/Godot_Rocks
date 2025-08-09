@@ -26,13 +26,13 @@ func _physics_process(delta: float) -> void:
 	
 	# TODO:  FIX THESE HARD CODED VALUES
 	if position.x < 0:
-		position.x = 2560
-	elif position.x > 2560:
+		position.x = GameManager.playarea.x
+	elif position.x > GameManager.playarea.x:
 		position.x = 0
 
 	if position.y < 0:
-		position.y =1600
-	elif position.y > 1600:
+		position.y =GameManager.playarea.y
+	elif position.y > GameManager.playarea.y:
 		position.y = 0
  
 

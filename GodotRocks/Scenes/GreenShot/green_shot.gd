@@ -2,12 +2,13 @@ extends Area2D
 
 
 @export var speed = 800
-@export var fire_rate = 0.3
+@export var fire_rate = 0.25
 @export var shot_damage = 10
 var velocity = Vector2.ZERO
 
 
 func start(xform ) -> float:
+	$ShotSound.play()
 	transform = xform
 	velocity = transform.x * speed
 	return fire_rate

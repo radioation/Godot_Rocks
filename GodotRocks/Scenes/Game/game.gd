@@ -1,23 +1,23 @@
 extends Node2D
 
 @export var rock_scene : PackedScene
- 
+
+@export var ufo_scene : PackedScene
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for i in 100:
+	for i in 20:
 		create_rock()
 		
- 
+	for i in 5:
+		create_ufo()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void: 
 	if Input.is_action_just_pressed("options"):
 		print("QUIT")
 		get_tree().quit()
-	if Input.is_action_just_pressed("start"):
-		print("start")
-		GameManager.start_game()
 
 
 func create_rock() -> void:
@@ -27,4 +27,12 @@ func create_rock() -> void:
 	rock.start(pos, vel)
 	call_deferred("add_child", rock)
 	
- 
+	
+func create_ufo() -> void: 
+
+	var pos = Vector2( randi_range( 0, 2560),randi_range (0, 1600) )
+	var u = ufo_scene.instantiate()  
+	u.position = pos
+	 
+	#ufo.max_force = 5500
+	call_deferred("add_child", u)
