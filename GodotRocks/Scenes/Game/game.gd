@@ -7,17 +7,19 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for i in 20:
-		create_rock()
-		
-	for i in 5:
-		create_ufo()
+	$HUD/VBoxContainer/Button.hide()
+	$HUD/VBoxContainer/MessageLabel.hide()
+	#for i in 20:
+		#create_rock()
+		#
+	#for i in 5:
+		#create_ufo()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void: 
 	if Input.is_action_just_pressed("options"):
-		print("QUIT")
-		get_tree().quit()
+		# should we exit back to main screen?
+		show_exit_confirmation_dialog()
 
 
 func create_rock() -> void:
@@ -36,3 +38,28 @@ func create_ufo() -> void:
 	 
 	#ufo.max_force = 5500
 	call_deferred("add_child", u)
+
+
+func show_exit_confirmation_dialog():
+	# Create dialog
+	var dialog = ConfirmationDialog.new() 
+	dialog.title = "Quit Game" 
+	dialog.dialog_text = "Exit to Main?"
+
+	# connect signals
+	dialog.canceled.connect (dialog_canceled)
+	dialog.confirmed.connect (dialog_confirmed)
+		
+	# show dialog
+	add_child(dialog)	
+	dialog.popup_centered() # center on screen
+	dialog.show()
+
+
+
+func dialog_canceled() -> void:
+	print("User clicked Cancel")
+
+func dialog_confirmed() -> void: 
+	print("QUIT")
+	GameManager.reset()

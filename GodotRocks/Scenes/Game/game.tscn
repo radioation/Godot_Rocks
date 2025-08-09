@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://w0vyy5u6bxij"]
+[gd_scene load_steps=7 format=3 uid="uid://w0vyy5u6bxij"]
 
 [ext_resource type="Script" uid="uid://cy5ysmjfrl50c" path="res://Scenes/Game/game.gd" id="1_mv0hc"]
 [ext_resource type="PackedScene" uid="uid://c2fco36kw2sn5" path="res://Scenes/Rock/rock.tscn" id="2_qikps"]
 [ext_resource type="PackedScene" uid="uid://uw4ew7wn3ncb" path="res://Scenes/UFO/ufo.tscn" id="3_i1e5p"]
 [ext_resource type="PackedScene" uid="uid://dm7abuytgx7os" path="res://Scenes/Player/player.tscn" id="4_i1e5p"]
 [ext_resource type="Texture2D" uid="uid://cosln12vsknok" path="res://assets/bg/bg.png" id="5_ciybh"]
+[ext_resource type="PackedScene" uid="uid://dschjhap3lsne" path="res://Scenes/HUD/hud.tscn" id="6_flgk0"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_mv0hc")
@@ -17,3 +18,5 @@ ufo_scene = ExtResource("3_i1e5p")
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("5_ciybh")
+
+[node name="HUD" parent="." instance=ExtResource("6_flgk0")]
