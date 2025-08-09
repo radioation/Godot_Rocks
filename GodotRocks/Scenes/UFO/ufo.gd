@@ -1,7 +1,10 @@
 extends Area2D
 
+
 class_name Ufo
 
+
+signal destroyed
 
 @export var target: Area2D = null
 
@@ -94,10 +97,15 @@ func hit( value ):
 
 
 func explode():  
+	$ExplosionSound.play()
+	$ExplosionSound.play()
 	$CollisionShape2D.set_deferred("disabled", true )
 	$AnimatedSprite2D.hide()
 	$Explosion.show()
 	$Explosion.play()
+	
+	destroyed.emit( )
+	
 	await $Explosion.animation_finished
 	queue_free()
 

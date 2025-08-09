@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://w0vyy5u6bxij"]
+[gd_scene load_steps=9 format=3 uid="uid://w0vyy5u6bxij"]
 
 [ext_resource type="Script" uid="uid://cy5ysmjfrl50c" path="res://Scenes/Game/game.gd" id="1_mv0hc"]
 [ext_resource type="PackedScene" uid="uid://c2fco36kw2sn5" path="res://Scenes/Rock/rock.tscn" id="2_qikps"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cya01t5l5w62g" path="res://Scenes/UFO/small_ufo.tscn" id="4_vifcx"]
 [ext_resource type="Texture2D" uid="uid://cosln12vsknok" path="res://assets/bg/bg.png" id="5_ciybh"]
 [ext_resource type="PackedScene" uid="uid://dschjhap3lsne" path="res://Scenes/HUD/hud.tscn" id="6_flgk0"]
+[ext_resource type="AudioStream" uid="uid://baj65nm26qio8" path="res://assets/sounds/Randomize4_SIN.wav" id="8_xfil1"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_mv0hc")
@@ -27,5 +28,9 @@ texture = ExtResource("5_ciybh")
 wait_time = 30.0
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="UfoSpawnSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_xfil1")
+volume_db = -6.011
 
 [connection signal="timeout" from="UfoTimer" to="." method="_on_ufo_timer_timeout"]

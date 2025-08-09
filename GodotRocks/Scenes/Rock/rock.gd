@@ -1,6 +1,6 @@
 extends Area2D
 
-signal exploded
+signal destroyed
 
 
 var radius = 128
@@ -53,7 +53,7 @@ func explode():
 	$ExplosionSound.play()
 	$Explosion.show()
 	
-	exploded.emit( )
+	destroyed.emit( )
  
 	await $Explosion.animation_finished
 	

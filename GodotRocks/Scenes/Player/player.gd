@@ -184,8 +184,10 @@ func set_hit_points( value ):
 
 
 func explode():
+	$ExplosionSound.play()
 	$Explosion.show()
 	$Explosion.play()
+	death.emit()
 	await $Explosion.animation_finished
 	$Explosion.hide()
 

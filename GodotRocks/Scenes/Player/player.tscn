@@ -1,10 +1,11 @@
-[gd_scene load_steps=72 format=3 uid="uid://dm7abuytgx7os"]
+[gd_scene load_steps=73 format=3 uid="uid://dm7abuytgx7os"]
 
 [ext_resource type="Script" uid="uid://bws1ciykln34d" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://cf1qu800wro2d" path="res://assets/sprites/Ship_000.png" id="1_uvnfx"]
 [ext_resource type="PackedScene" uid="uid://csdh4lnfspa7f" path="res://Scenes/BlueShot/blue_shot.tscn" id="3_hlqkp"]
 [ext_resource type="PackedScene" uid="uid://dk3emfvbayel6" path="res://Scenes/GreenShot/green_shot.tscn" id="3_rbwwl"]
 [ext_resource type="Script" uid="uid://cdd4eiiceb1wg" path="res://Scenes/Player/player_sprite_2d.gd" id="3_xpcdj"]
+[ext_resource type="AudioStream" uid="uid://be7o8aswj5x44" path="res://assets/sounds/explosion_Randomize19.wav" id="4_dbngi"]
 [ext_resource type="Texture2D" uid="uid://b3pyrv3cbbay5" path="res://assets/sprites/ship_frames/Ship_001.png" id="4_vwcno"]
 [ext_resource type="Texture2D" uid="uid://cs5sy53xv5foj" path="res://assets/sprites/ship_frames/Ship_002.png" id="5_u8s58"]
 [ext_resource type="Texture2D" uid="uid://b4hmiba4yjrew" path="res://assets/sprites/ship_frames/Ship_003.png" id="6_d4a23"]
@@ -79,6 +80,9 @@ z_index = 10
 script = ExtResource("1_a3d8c")
 green_shot_scene = ExtResource("3_rbwwl")
 blue_shot_scene = ExtResource("3_hlqkp")
+
+[node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_dbngi")
 
 [node name="SecondaryShotCooldownTimer" type="Timer" parent="."]
 

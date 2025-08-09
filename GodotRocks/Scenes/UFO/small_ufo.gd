@@ -2,6 +2,7 @@ extends Area2D
 
 class_name SmallUfo
 
+signal destroyed
 
 @export var target: Area2D = null
 
@@ -95,6 +96,9 @@ func explode():
 	$AnimatedSprite2D.hide()
 	$Explosion.show()
 	$Explosion.play()
+	
+	destroyed.emit( )
+	
 	await $Explosion.animation_finished
 	queue_free()
 

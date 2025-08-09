@@ -29,8 +29,9 @@ func _process(delta: float) -> void:
 		show_exit_confirmation_dialog()
 
 	if get_tree().get_nodes_in_group("rocks").size() == 0:
-		GameManager.start_next_level()
-		
+		var current_level = GameManager.start_next_level()
+		var num_rocks = 10 + current_level * 5
+		create_rocks( num_rocks )
 	
 	if $UfoTimer.is_stopped() and get_tree().get_nodes_in_group("ufos").size() == 0:
 		$UfoTimer.start( randf_range( 10.0, 30))
@@ -38,7 +39,7 @@ func _process(delta: float) -> void:
 	
 	
 func create_ufo() -> void: 
-
+	
 	var pos = Vector2( randi_range( 0, 2560),randi_range (0, 1600) )
 	var u = ufo_scene.instantiate()  
 	u.position = pos
@@ -55,6 +56,28 @@ func create_small_ufo() -> void:
 	 
 	#ufo.max_force = 5500
 	call_deferred("add_child", u)
+
+	
+func create_rocks_in_range( count: int, max_x: int, max_y: int ) -> void:
+	for i in count:
+		var rot = randf_range(0, TAU)
+		
+		var vel = Vector2.RIGHT.rotated(rot) * randf_range(1.5,2.7)
+		var rando = randi() % 2
+		var pos  : Vector2  = Vector2.ZERO
+		
+		if rando == 0 : 
+			pos = Vector2( randi_range( 0.0, max_x ), 0.0 if randi()%2==0 else max_y ) 
+			
+		else:
+			pos = Vector2( 0.0 if randi()%2==0 else max_x , randi_range( 0.0, max_y) )
+			
+		var rock = rock_scene.instantiate()
+		rock.start(pos, vel)
+		get_tree().current_scene.add_child( rock )
+		
+func create_rocks( count: int ) -> void:
+	create_rocks_in_range( count, GameManager.playarea.x, GameManager.playarea.y) 
 
 
 func show_exit_confirmation_dialog():
@@ -84,21 +107,33 @@ func dialog_confirmed() -> void:
 	get_tree().paused = false
 	GameManager.reset()
 
+func get_random_ufo_start_position() -> Vector2:
+	var rando = randi() % 2
+	var pos  : Vector2  = Vector2.ZERO
+	
+	if rando == 0 : 
+		pos = Vector2( randi_range( 0.0, GameManager.playarea.y), 0.0 if randi()%2==0 else GameManager.playarea.y ) 
+	else:
+		pos = Vector2( 0.0 if randi()%2==0 else GameManager.playarea.y , randi_range( 0.0, GameManager.playarea.y) )
 
-func _on_ufo_timer_timeout():
-	print("SPAWN A UFO" )
+	return pos
+	
+func _on_ufo_timer_timeout(): 
+	$UfoSpawnSound.play()
 	if GameManager.current_level % 5 :
-		var pos = Vector2( randi_range( 0, 2560),randi_range (0, 1600) )
+		
+
 		var u = ufo_scene.instantiate()  
-		u.position = pos
+		u.position = get_random_ufo_start_position()
 		 
 		#ufo.max_force = 5500
 		call_deferred("add_child", u)
 	else:
-		for i in GameManager.current_level:
-			var pos = Vector2( randi_range( 0, 2560),randi_range (0, 1600) )
+		
+		var pos = get_random_ufo_start_position()
+		for i in GameManager.current_level: 
 			var u = small_ufo_scene.instantiate()  
-			u.position = pos
+			u.position = pos + Vector2( randf_range( 10.0, 20.0 ), randf_range( 10.0, 20.0 ))
 			 
 			#ufo.max_force = 5500
 			call_deferred("add_child", u)
