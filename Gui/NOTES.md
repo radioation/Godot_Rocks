@@ -55,5 +55,28 @@ func _on_help_popupmenu_id_pressed(id: int) -> void:
         about_dialog.popup_centered()
 ```
 
+## FileDialog 
+not much to it, add it as a node in your scene and load it with `@onready`
+```gd
+@onready var file_dialog: FileDialog = $FileDialog
+```
+can be configured
+```gd
+    #file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILES
+    file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
+    file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+    #file_dialog.filters = PackedStringArray(["*.png;*.jpg;*.jpeg;*.bmp;*.tga;*.webp;*.exr;*.hdr;*.glb;*.gltf;*.obj;*.dae;*.mesh ; Images & 3D"])
+    file_dialog.files_selected.connect(_on_files_chosen)
+```
+and easy to show
 
+```gd
+        file_dialog.popup_centered()
+```
+handle the node signal to get the selection.
+```gd
+
+func _on_file_dialog_dir_selected(dir: String) -> void:
+    print("DIR: %s" % dir)
+```
 # 

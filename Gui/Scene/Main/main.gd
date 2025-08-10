@@ -6,6 +6,10 @@ var about_dialog: Window
 @onready var menu_bar_1 : MenuBar = $VBoxContainer/HBoxContainer/MenuBar
 @onready var menu_bar_2 : MenuBar = $VBoxContainer/HBoxContainer/MenuBar2
 
+
+@onready var file_dialog: FileDialog = $FileDialog
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_setup_menu_1()
@@ -28,6 +32,10 @@ func _setup_menu_1() -> void:
 	file_popup.add_item("Dynamic Item ID: " + str(count), count)
 	count += 1
 	file_popup.add_item("Dynamic Item ID: "+ str(count), count)
+	
+	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
+	file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+	file_dialog.dir_selected.connect(_on_file_dialog_dir_selected)
 
 
 func _setup_menu_2() -> void:
@@ -36,6 +44,8 @@ func _setup_menu_2() -> void:
 
 func _on_file_popup_menu_id_pressed(id: int) -> void:
 	print(" FILE MENU ID: %d " % id ) 
+	if id == 0 :
+		file_dialog.popup_centered()
 
  
 func _on_help_popupmenu_id_pressed(id: int) -> void:
@@ -59,3 +69,8 @@ func _on_view_popupmenu_id_pressed(id: int) -> void:
 		
 
 	
+
+
+func _on_file_dialog_dir_selected(dir: String) -> void:
+	print("DIR: %s" % dir)
+	pass # Replace with function body.
