@@ -2,24 +2,31 @@ extends Area2D
 
 signal destroyed
 
-
+var size: int 
 var radius = 128
 var velocity: Vector2= Vector2.ZERO
 
-var hit_points: int = 15
+var hit_points: int = 20
 var margin:float = 256.0
 
-func start( pos, vel ) -> void:
+func start( _size, pos, vel ) -> void:
+	size = _size
 	position = pos  
-	velocity = vel
-	hit_points = 30
+	velocity = vel 
+	$AnimatedSprite2D.scale = Vector2.ONE * ( _size/10.0 + 0.05 )
+	
+	radius = int($AnimatedSprite2D.sprite_frames.get_frame_texture( "Rock1", 0 ).get_size().x / 2 * $AnimatedSprite2D.scale.x)
+	var shape = CircleShape2D.new()
+	shape.radius = radius
+	$CollisionShape2D.shape = shape
+		
 	$AnimatedSprite2D.frame = randi() % 5 * 10 
 	
 	$AnimatedSprite2D.play( "Rock" + str( randi() %4 + 1))
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void: 
-	radius = $CollisionShape2D.shape.radius
+	pass  #radius = $CollisionShape2D.shape.radius
 
 
 
@@ -53,7 +60,7 @@ func explode():
 	$ExplosionSound.play()
 	$Explosion.show()
 	
-	destroyed.emit( )
+	destroyed.emit( size, radius, position, velocity)
  
 	await $Explosion.animation_finished
 	

@@ -11,12 +11,13 @@ func _process(delta: float) -> void:
 	pass
 	
 	
-func update_score(new_score: int) -> void:
-	$MarginContainer/HBoxContainer/Score.text = "SCORE: " + str ( new_score )
+func set_score(new_score: int) -> void:
+	$MarginContainer/HBoxContainer/ScoreLabel.text = "SCORE: " + str ( new_score )
 	
 	
-func update_lives(new_lives: int) -> void:
-	$MarginContainer/HBoxContainer/Lives.text = "LIVES: " + str ( new_lives )
+func set_lives(new_lives: int) -> void:
+	$MarginContainer/HBoxContainer/LivesLabel.text = "LIVES: " + str ( new_lives )
 	
 func set_message( msg: String ) -> void:
-	$MarginContainer/MessageLabel.text = msg
+	$VBoxContainer/MessageLabel.text = msg
+	

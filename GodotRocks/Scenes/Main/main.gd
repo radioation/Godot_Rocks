@@ -24,7 +24,7 @@ func create_rocks(count: int, max_x: int, max_y: int ) -> void:
 		var vel = Vector2.RIGHT.rotated(randf_range(0, TAU)) * randf_range(1.5,2.7)
 		var pos = Vector2( randi_range( 0, max_x), randi_range( 0, max_y) )
 		var rock = rock_scene.instantiate()
-		rock.start(pos, vel)
+		rock.start(randi_range(1,3), pos, vel)
 		call_deferred("add_child", rock)
 	
  

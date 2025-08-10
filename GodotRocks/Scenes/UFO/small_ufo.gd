@@ -14,8 +14,8 @@ var max_force : float = 0.0
 var max_speed : float = 0.0
 var radius : float = 0.0
 
-var hit_points = 10
- 
+var hit_points :int = 10
+var  score_pts : int =  150
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void: 
@@ -97,7 +97,7 @@ func explode():
 	$Explosion.show()
 	$Explosion.play()
 	
-	destroyed.emit( )
+	destroyed.emit( score_pts )
 	
 	await $Explosion.animation_finished
 	queue_free()

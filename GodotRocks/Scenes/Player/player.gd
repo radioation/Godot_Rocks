@@ -1,7 +1,6 @@
 extends Area2D
 
-# signals 
-signal lives_changed
+# signals  
 signal hit_points_changed
 signal death
 
@@ -34,8 +33,7 @@ var radius :float = 0.0
 
 
 @export var max_hit_points = 100
-var hit_points = 0 : set = set_hit_points 
-var lives = 0 : set = set_lives
+var hit_points = 0  : set = set_hit_points 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void: 
@@ -165,25 +163,16 @@ func _on_secondary_shot_cooldown_timer_timeout() -> void:
 	can_shoot_secondary = true  
 
 
-func set_lives( value ):
-	lives = value
-	lives_changed.emit(lives) 
-	if lives <= 0:
-		set_state(DEAD)
-	else:
-		set_state(INVUL)
-	hit_points = max_hit_points
-	
-func set_hit_points( value ): 
+ 
+func set_hit_points( value ) ->void:
 	hit_points = value
 	hit_points_changed.emit( hit_points / max_hit_points )
-	if hit_points <= 0:
-		lives -= 1
+	if hit_points <= 0: 
 		set_state(DEAD)
 		explode() 
 
 
-func explode():
+func explode() ->void:
 	$ExplosionSound.play()
 	$Explosion.show()
 	$Explosion.play()
@@ -200,3 +189,9 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _on_invul_timer_timeout() -> void:
 	set_state( ALIVE ) # Replace with function body.
+
+func respawn() ->void:
+	position = GameManager.playarea / 2.0
+	set_state( INVUL )
+	$Sprite2D.show()
+	$InvulTimer.start()
