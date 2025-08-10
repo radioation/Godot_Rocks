@@ -23,6 +23,7 @@ GameManager="*res://game_manager.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=800
+window/size/mode=3
 
 [dotnet]
 
