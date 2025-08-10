@@ -13,8 +13,6 @@ var can_shoot_secondary = true
 enum { INIT, ALIVE, INVUL, DEAD }
 var curr_state = INIT
 
-
-
 @export var max_speed : float = 900.0
 @export var acceleration : float = 450.0
 @export var rotation_speed : float = 5.0
@@ -43,12 +41,10 @@ func _ready() -> void:
 	#$ShotCooldownTimer.wait_time = 0;
 	radius = $CollisionShape2D.shape.radius
 	half_screen = get_viewport().size / 2.0
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+ 
 func _process(delta: float) -> void:
 	read_input()
-
-
+ 
 
 func set_state( new_state ) -> void:
 	match new_state:
@@ -80,12 +76,10 @@ func _physics_process(delta: float) -> void:
 		velocity += thrust_vector * thrust * delta
 		if velocity.length() > max_speed:
 			velocity = velocity.normalized() * max_speed
-	#else:
-	# work in the opposite directoy of velocity
+ 
 	var dv = velocity * -0.012
 	velocity += dv
-		
-	#print("VELOCITY: " + str(velocity) )
+		 
 	position += velocity * delta
 	
 	if position.x < 0:
@@ -165,23 +159,15 @@ func _on_secondary_shot_cooldown_timer_timeout() -> void:
 
 
  
-#func set_hit_points( value ) ->void: 
-	#hit_points = value
-	#hit_points_changed.emit( hit_points / max_hit_points )
-	#if hit_points <= 0: 
-		#set_state(DEAD)
-		#explode() 
-		#
-func got_shot( damage: float) -> void:
-	print( "GOT SHOT: " + str(curr_state))
+ 
+func got_shot( damage: float) -> void: 
 	if curr_state == ALIVE:
 		hit_points -= damage
 		if hit_points <= 0: 
 			set_state(DEAD)
 			explode() 
 
-func _on_area_entered(area: Area2D) -> void:
-	print("CRASH? " + str(curr_state))
+func _on_area_entered(area: Area2D) -> void: 
 	if curr_state == ALIVE and ( area.is_in_group("rocks") or area.is_in_group("ufos") ) :
 		hit_points = 0
 		set_state(DEAD)
@@ -202,8 +188,7 @@ func explode() ->void:
 func _on_invul_timer_timeout() -> void:
 	set_state( ALIVE ) # Replace with function body.
 
-func respawn() ->void:
-	print("RESPAWN")
+func respawn() ->void: 
 	hit_points = max_hit_points
 	position = GameManager.playarea / 2.0
 	set_state( INVUL )
