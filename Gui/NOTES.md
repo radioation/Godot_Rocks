@@ -14,8 +14,14 @@
   Select the `PopupMenu` and check `Node | Signas > PopuMenu`.  `id_pressed( id: int )` will
   give you the ID of the menu item that was pressed
 
-* you can programatically add itme to a menu
+* you can programatically add items to a menu
 ```gd
+
+@onready var menu_bar_1 : MenuBar = $VBoxContainer/HBoxContainer/MenuBar
+
+...
+
+
 func _setup_menu_1() -> void:
     var count = menu_bar_1.get_menu_count()
     print( "MenuBar 1 menu count: " + str( count ))
@@ -24,4 +30,30 @@ func _setup_menu_1() -> void:
     count += 1
     file_popup.add_item("Dynamic Item ID: "+ str(count), count)
 ```
+
+* and handle checkboxes 
+```gd
+func _on_view_popupmenu_id_pressed(id: int) -> void:
+    print(" VIEW MENU ID: %d " % id ) 
+    var view_popup :PopupMenu = menu_bar_1.get_menu_popup(1)
+    var checked: bool = view_popup.is_item_checked( id )
+    
+    print( "ID: %d is checked: %s " % [id, checked ]) 
+    view_popup.set_item_checked( id, !checked )
+```
+## Aboot dialog
+* make a Scene from a `Window` and add UI elements as needed for the dialog box
+* can load it from the menu item signal
+```gd
+func _on_help_popupmenu_id_pressed(id: int) -> void:
+    print(" HELP MENU ID: %d " % id ) 
+    if id == 0:
+        if about_dialog == null:
+            about_dialog = about_scene.instantiate()
+            add_child( about_dialog)
+        #about_dialog.show()
+        about_dialog.popup_centered()
+```
+
+
 # 

@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4ro27bychycf"]
+
+[ext_resource type="Script" uid="uid://dldpr1hsf6k34" path="res://Scene/Main/about.gd" id="1_e7cfm"]
+
+[node name="About" type="Window"]
+position = Vector2i(0, 36)
+size = Vector2i(600, 500)
+script = ExtResource("1_e7cfm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center][b][font_size=32]Rich Text Title[/font_size][/b][/center]
+
+This is some plain old text in a RichTextLabel.
+
+Here's some [b]bold text[/b] within the paragraph.
+
+We can easily combine formatting, like [b][color=red]bold red text[/color][/b]."
+fit_content = true
+
+[node name="LicensesList" type="ItemList" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LinkButton" type="LinkButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Go Go Godot"
+uri = "https://godotengine.org/"
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "CLOSE"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/LinkButton" to="." method="_on_link_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]

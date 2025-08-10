@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6tsc68ky18rh"]
+[gd_scene load_steps=3 format=3 uid="uid://b6tsc68ky18rh"]
 
 [ext_resource type="Script" uid="uid://btddjloslw2co" path="res://Scene/Main/main.gd" id="1_ajaps"]
+[ext_resource type="PackedScene" uid="uid://c4ro27bychycf" path="res://Scene/Main/about.tscn" id="2_c5csi"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ajaps")
+about_scene = ExtResource("2_c5csi")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -37,6 +39,7 @@ item_1/id = 1
 [node name="View" type="PopupMenu" parent="VBoxContainer/HBoxContainer/MenuBar"]
 item_count = 3
 item_0/text = "Item 2a"
+item_0/checkable = 1
 item_0/id = 0
 item_1/text = "Item 2b"
 item_1/checkable = 1
