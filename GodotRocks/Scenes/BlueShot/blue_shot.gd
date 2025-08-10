@@ -1,6 +1,5 @@
 extends Area2D
 
-
 @export var speed = 1000
 @export var fire_rate = 0.1
 @export var shot_damage = 3.0

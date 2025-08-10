@@ -32,11 +32,12 @@ var half_screen = Vector2.ZERO
 var radius :float = 0.0
 
 
-@export var max_hit_points = 100
-var hit_points = 0  : set = set_hit_points 
+@export var max_hit_points = 10
+var hit_points = 0 # : set = set_hit_points 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void: 
+	hit_points = max_hit_points
 	position = GameManager.playarea / 2.0
 	set_state( ALIVE )
 	#$ShotCooldownTimer.wait_time = 0;
@@ -164,13 +165,28 @@ func _on_secondary_shot_cooldown_timer_timeout() -> void:
 
 
  
-func set_hit_points( value ) ->void:
-	hit_points = value
-	hit_points_changed.emit( hit_points / max_hit_points )
-	if hit_points <= 0: 
-		set_state(DEAD)
-		explode() 
+#func set_hit_points( value ) ->void: 
+	#hit_points = value
+	#hit_points_changed.emit( hit_points / max_hit_points )
+	#if hit_points <= 0: 
+		#set_state(DEAD)
+		#explode() 
+		#
+func got_shot( damage: float) -> void:
+	print( "GOT SHOT: " + str(curr_state))
+	if curr_state == ALIVE:
+		hit_points -= damage
+		if hit_points <= 0: 
+			set_state(DEAD)
+			explode() 
 
+func _on_area_entered(area: Area2D) -> void:
+	print("CRASH? " + str(curr_state))
+	if curr_state == ALIVE and ( area.is_in_group("rocks") or area.is_in_group("ufos") ) :
+		hit_points = 0
+		set_state(DEAD)
+		area.explode()
+		explode()
 
 func explode() ->void:
 	$ExplosionSound.play()
@@ -181,16 +197,14 @@ func explode() ->void:
 	$Explosion.hide()
 
 
-func _on_area_entered(area: Area2D) -> void:
-	if area.is_in_group( "rocks" ): 
-		hit_points = 0
-		area.explode()
 
 
 func _on_invul_timer_timeout() -> void:
 	set_state( ALIVE ) # Replace with function body.
 
 func respawn() ->void:
+	print("RESPAWN")
+	hit_points = max_hit_points
 	position = GameManager.playarea / 2.0
 	set_state( INVUL )
 	$Sprite2D.show()

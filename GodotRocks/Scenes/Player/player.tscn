@@ -113,6 +113,7 @@ visible = false
 
 [node name="InvulTimer" type="Timer" parent="."]
 wait_time = 3.0
+one_shot = true
 
 [node name="ThrustSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("70_rbwwl")

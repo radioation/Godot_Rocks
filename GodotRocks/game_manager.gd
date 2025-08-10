@@ -27,10 +27,8 @@ func reset() -> void:
 	get_tree().change_scene_to_file(main_scene)
 	
 
-func start_next_level() -> int:
-	current_level += 1
-
-	
+func next_level() -> int:
+	current_level += 1 
 	return current_level
 	
 func start_game() -> void:

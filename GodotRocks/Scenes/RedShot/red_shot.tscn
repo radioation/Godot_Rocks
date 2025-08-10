@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbfnbb26soduw"]
+[gd_scene load_steps=5 format=3 uid="uid://bbfnbb26soduw"]
 
 [ext_resource type="Script" uid="uid://bjjvgjheg2sak" path="res://Scenes/RedShot/red_shot.gd" id="1_plwt7"]
 [ext_resource type="Texture2D" uid="uid://5edrxvlqa4fb" path="res://assets/sprites/red_shot.png" id="1_rm0kj"]
+[ext_resource type="AudioStream" uid="uid://s2qaeycdnufl" path="res://assets/sounds/laserx_4.wav" id="3_ulxmf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rm0kj"]
 radius = 4.0
@@ -19,6 +20,9 @@ shape = SubResource("CircleShape2D_rm0kj")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(2.38419e-07, 2.38419e-07)
 scale = Vector2(0.4, 0.4)
+
+[node name="ShotSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ulxmf")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

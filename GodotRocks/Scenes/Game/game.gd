@@ -12,7 +12,7 @@ var lives : int = 3
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$HUD/VBoxContainer/Button.hide()
-	$HUD/VBoxContainer/MessageLabel.hide()
+	$HUD.set_message("")
 	start_game()
 		#$UfoTimer.start( randf_range( ,20 ) )
 	
@@ -32,14 +32,22 @@ func _process(delta: float) -> void:
 	if not playing:
 		return
 	if get_tree().get_nodes_in_group("rocks").size() == 0:
-		var current_level = GameManager.start_next_level()
-		var num_rocks = 2 + current_level * 2
-		
-		create_rocks( num_rocks, 3 )
+		playing = false
+		start_wave( GameManager.next_level() )
+		 
 	
 	if $UfoTimer.is_stopped() and get_tree().get_nodes_in_group("ufos").size() == 0:
 		$UfoTimer.start( randf_range( 10.0, 30))
- 
+
+func start_wave( current_level: int ) -> void:
+	var num_rocks = 2 + current_level * 2
+	$HUD.set_message("Wave " + str(current_level) )
+	$Timer.start(3)
+	await $Timer.timeout
+	$HUD.set_message("")
+	create_rocks( num_rocks, 3 )
+	playing = true
+	 
 	
 
 func start_game() ->void:
