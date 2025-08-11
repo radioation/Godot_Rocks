@@ -130,4 +130,24 @@ func _on_files_tab_tree_item_selected() -> void:
 ```
 
 
+# 2D View
+
+* use `_gui_input()` to get mouse events
+```gd
+func _gui_input(e: InputEvent) -> void:
+    if e is InputEventMouseButton:
+        var mb := e as InputEventMouseButton
+        if mb.button_index == MOUSE_BUTTON_WHEEL_UP and mb.pressed:
+            zoom = clamp(zoom * 1.1, zoom_min, zoom_max)
+            _update_layout()
+        elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN and mb.pressed:
+            zoom = clamp(zoom / 1.1,  zoom_min, zoom_max)
+            _update_layout()
+        elif mb.button_index == MOUSE_BUTTON_LEFT:
+            dragging = mb.pressed
+            drag_start = get_local_mouse_position()
+```
+# 3D View
+
+
 

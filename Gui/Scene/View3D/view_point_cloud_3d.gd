@@ -4,8 +4,8 @@ extends SubViewportContainer
 @onready var cam: Camera3D      = $SubViewport/WorldRoot/Camera3D
 @onready var points_root: Node3D = $SubViewport/WorldRoot/PointCloudRoot
 
-@export var point_size: float = 0.05
-@export var num_points: int = 360
+@export var point_size: float = 0.01
+@export var num_points: int = 36
 @export var radius: float = 2.5
 
 
@@ -36,7 +36,16 @@ func _gui_input(e: InputEvent) -> void:
 	if e is InputEventMouseButton: 
 		var mbutton := e as InputEventMouseButton
 		if mbutton.button_index == MOUSE_BUTTON_LEFT:
-			mouse_down = true
+			mouse_down = mbutton.pressed
+			accept_event()
+		elif mbutton.button_index == MOUSE_BUTTON_WHEEL_UP :
+			distance = max(0.2, distance * 0.9)
+			update_camera()
+			accept_event()
+		elif mbutton.button_index == MOUSE_BUTTON_WHEEL_DOWN :
+			distance *= 1.1
+			update_camera()
+			accept_event()			
 	elif e is InputEventMouseMotion:
 		var m_motion := e as InputEventMouseMotion
 		if mouse_down:
@@ -58,12 +67,23 @@ func update_camera() -> void:
 func add_point(position: Vector3, color: Color = Color.WHITE, size: float = -1.0) -> MeshInstance3D:
 	var mi := MeshInstance3D.new()
 	mi.mesh = QuadMesh.new()
-	#mi.material_override  
+	mi.material_override  = make_billboard_material(color)
 	mi.position = position 
-	mi.scale  = Vector3.ONE * (size if size > 0.0 else point_size)
+	mi.scale  = Vector3.ONE * 0.00001 # (size if size > 0.0 else point_size)
 	points_root.add_child(mi)
 	return mi
-	
+
+func make_billboard_material(color: Color) -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	m.albedo_color = color
+	m.albedo_texture = dot_tex
+	m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED   # Aways face camera
+	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	m.vertex_color_use_as_albedo = false
+	m.disable_fog = true
+	return m
+
 func make_dot_texture(size: int) -> Texture2D:
 	size = clamp(size, 8, 512)
 	var img := Image.create(size, size, false, Image.FORMAT_RGBA8)
@@ -84,6 +104,6 @@ func create_points() -> void:
 		var angle = TAU * float(i) / float(max(1, num_points))
 		var p = Vector3(cos(angle), randf() * 0.6 - 0.3, sin(angle)) * radius
 		var c = Color.from_hsv(randf(), 0.8, 1.0, 1.0)
-		var n = add_point(p, c)
+		var n = add_point(p, c )
 		points.append(n)
 	
