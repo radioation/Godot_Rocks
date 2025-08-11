@@ -147,7 +147,47 @@ func _gui_input(e: InputEvent) -> void:
             dragging = mb.pressed
             drag_start = get_local_mouse_position()
 ```
-# 3D View
+Large TextureRects may go out of bounds from their parent control. YOu can
+easily clip them with the `clip_contents` property
+
+```gd
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+    clip_contents = true 
+
+```
+
+# Grid
+Adding a border to grid children is also easy
+
+```gd
+ func _on_file_dialog_file_selected(path: String) -> void:
+        print("FILE: %s" % path)
+        var v: Control = view2d_scene.instantiate()
+        v.set_anchors_preset(Control.PRESET_FULL_RECT)
+        var p: Panel =  wrap_with_border( v )
+        grid.add_child(p)
+        v.call_deferred("load_image", path )
+
+
+
+func wrap_with_border(ctrl: Control, color: Color = Color(0.8, 0.8, 0.8)) -> Panel:
+       var panel := Panel.new()
+       var sb := StyleBoxFlat.new()
+       sb.border_width_top = 1
+       sb.border_width_bottom = 1
+       sb.border_width_left = 1
+       sb.border_width_right = 1
+       sb.border_color = color
+       sb.bg_color = Color.TRANSPARENT
+       panel.add_theme_stylebox_override("panel", sb)
+       panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+       panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+       panel.add_child(ctrl)
+       return panel
+```
+
+
 
 
 

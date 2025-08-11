@@ -40,7 +40,9 @@ func _ready() -> void:
 
 
 	var v: Control = view_pcl_3d_scene.instantiate()
-	grid.add_child(v) 
+	v.set_anchors_preset(Control.PRESET_FULL_RECT)
+	var p: Panel = wrap_with_border( v )
+	grid.add_child(p) 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -137,12 +139,34 @@ func get_directory_list( path: String, tree_item: TreeItem ) -> void:
 func _on_files_tab_tree_item_selected() -> void:
 	var tree_item = files_tree.get_selected()
 	print( "SELECTED: %s - %s" % [ tree_item.get_text(0), tree_item.get_metadata(0) ] )
-
+	var v: Control = view2d_scene.instantiate()
+	v.set_anchors_preset(Control.PRESET_FULL_RECT)
+	var p: Panel =  wrap_with_border( v )
+	grid.add_child(p)
+	v.call_deferred("load_image", tree_item.get_metadata(0)  )
 
 
 func _on_file_dialog_file_selected(path: String) -> void:
 	print("FILE: %s" % path) 
 	var v: Control = view2d_scene.instantiate()
-	grid.add_child(v)
+	v.set_anchors_preset(Control.PRESET_FULL_RECT)
+	var p: Panel =  wrap_with_border( v )
+	grid.add_child(p)
 	v.call_deferred("load_image", path )
 	
+
+
+func wrap_with_border(ctrl: Control, color: Color = Color(0.8, 0.8, 0.8)) -> Panel:
+	var panel := Panel.new()
+	var sb := StyleBoxFlat.new()
+	sb.border_width_top = 1
+	sb.border_width_bottom = 1
+	sb.border_width_left = 1
+	sb.border_width_right = 1
+	sb.border_color = color
+	sb.bg_color = Color.TRANSPARENT
+	panel.add_theme_stylebox_override("panel", sb)
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	panel.add_child(ctrl)
+	return panel

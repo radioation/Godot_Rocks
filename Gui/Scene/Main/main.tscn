@@ -27,11 +27,11 @@ grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 
 [node name="MenuBar" type="MenuBar" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 2
-size_flags_vertical = 0
+size_flags_horizontal = 3
 
 [node name="File" type="PopupMenu" parent="VBoxContainer/HBoxContainer/MenuBar"]
 item_count = 2
@@ -111,8 +111,11 @@ text = "3x2"
 layout_mode = 2
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/ScrollContainer"]
+clip_contents = true
 custom_minimum_size = Vector2(800, 500)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 columns = 3
 
 [node name="FileDialog" type="FileDialog" parent="."]
