@@ -14,13 +14,12 @@ var pan := Vector2.ZERO
 var dragging : bool= false
 var drag_start := Vector2.ZERO
 
-@export var zoom_min: float = 0.5
+@export var zoom_min: float = 0.05
 @export var zoom_max: float = 10.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -62,7 +61,9 @@ func _update_layout() -> void:
 	if tex_rect.texture:
 		print("ZOOM: %.4f" % zoom )
 		var scaled := image_size * zoom
+		
+		tex_rect.expand = true
 		tex_rect.custom_minimum_size = scaled
 		tex_rect.size = scaled
-		tex_rect.position = (size - scaled) * 0.5  * pan
+		tex_rect.position = (size - scaled) * 0.5  + pan
 		overlay.text = "%s  |  Zoom: %.2fx" % [file_path.get_file(), zoom]

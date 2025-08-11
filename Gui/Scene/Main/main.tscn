@@ -113,24 +113,6 @@ custom_minimum_size = Vector2(800, 500)
 layout_mode = 2
 columns = 3
 
-[node name="Panel" type="Panel" parent="VBoxContainer/HSplitContainer/VSplitContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(320, 240)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/HSplitContainer/VSplitContainer/ScrollContainer/GridContainer/Panel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Panel2" type="Panel" parent="VBoxContainer/HSplitContainer/VSplitContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(320, 240)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/HSplitContainer/VSplitContainer/ScrollContainer/GridContainer/Panel2"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a Directory"
 ok_button_text = "Select Current Folder"
