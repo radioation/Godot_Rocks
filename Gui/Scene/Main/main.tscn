@@ -109,6 +109,7 @@ text = "3x2"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/ScrollContainer"]
 clip_contents = true

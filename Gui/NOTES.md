@@ -157,7 +157,7 @@ func _ready() -> void:
 
 ```
 
-# Grid
+# GridContainer
 Adding a border to grid children is also easy
 
 ```gd
@@ -187,6 +187,16 @@ func wrap_with_border(ctrl: Control, color: Color = Color(0.8, 0.8, 0.8)) -> Pan
        return panel
 ```
 
+If you want scrollbars you can put the GridContainer in a ScrollContainer.
+Grid children need a minimum size or the grid rows will keep getting shorter.
+
+```gd
+
+func wrap_with_border(ctrl: Control, color: Color = Color(0.8, 0.8, 0.8)) -> Panel:
+    var panel := Panel.new()
+    panel.custom_minimum_size = Vector2( 320.0, 200.0 )
+
+```
 
 
 

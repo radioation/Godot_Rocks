@@ -158,6 +158,7 @@ func _on_file_dialog_file_selected(path: String) -> void:
 
 func wrap_with_border(ctrl: Control, color: Color = Color(0.8, 0.8, 0.8)) -> Panel:
 	var panel := Panel.new()
+	panel.custom_minimum_size = Vector2( 320.0, 200.0 )
 	var sb := StyleBoxFlat.new()
 	sb.border_width_top = 1
 	sb.border_width_bottom = 1
