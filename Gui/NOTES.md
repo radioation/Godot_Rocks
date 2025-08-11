@@ -79,4 +79,43 @@ handle the node signal to get the selection.
 func _on_file_dialog_dir_selected(dir: String) -> void:
     print("DIR: %s" % dir)
 ```
-# 
+# Tree
+pretty trivial to fill up
+```gd
+    files_tree.clear()
+    var root = files_tree.create_item()   # NULL will be root
+    root.set_text(0,"ROOT")
+
+
+    var child1 = files_tree.create_item(root)   # child of root
+    child1.set_text(0, "child1")
+    var child2 = files_tree.create_item(root)   # child of root
+    child2.set_text(0, "child2")
+    
+     
+    var child1_1 = files_tree.create_item( child1)  # Children having children
+    child1_1.set_text(0,"child_1_1")   
+```
+
+
+filesystem example
+```gd
+func get_directory_list( path: String, tree_item: TreeItem ) -> void:
+    var dir = DirAccess.open(path)
+    
+    if dir:
+        dir.list_dir_begin()
+        var file_name = dir.get_next()
+        while file_name != "":
+            var new_tree_item = files_tree.create_item(tree_item)
+            new_tree_item.set_text(0, file_name )
+            if dir.current_is_dir():
+                print("DIR: " + path.path_join(file_name))
+                get_directory_list(path.path_join(file_name), new_tree_item)
+            else:
+                print("file: " + file_name)
+            file_name = dir.get_next()
+        dir.list_dir_end()
+```
+
+

@@ -9,12 +9,24 @@ var about_dialog: Window
 
 @onready var file_dialog: FileDialog = $FileDialog
 
+@onready var files_tree: Tree = $VBoxContainer/HSplitContainer/LeftVBoxContainer/TabContainer/FilesTabTree
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_setup_menu_1()
 	_setup_menu_2()
 	
+	files_tree.clear()
+	var root = files_tree.create_item()
+	root.set_text(0,"ROOT")
+	var child1 = files_tree.create_item(root)
+	child1.set_text(0, "child1")
+	var child2 = files_tree.create_item(root)
+	child2.set_text(0, "child2")
+	
+	
+	var child1_1 = files_tree.create_item( child1)
+	child1_1.set_text(0,"child_1_1")
 	
 
 
@@ -71,6 +83,28 @@ func _on_view_popupmenu_id_pressed(id: int) -> void:
 	
 
 
-func _on_file_dialog_dir_selected(dir: String) -> void:
-	print("DIR: %s" % dir)
-	pass # Replace with function body.
+func _on_file_dialog_dir_selected(path: String) -> void:
+	print("DIR: %s" % path)
+	files_tree.clear()
+	var tree_item = files_tree.create_item()
+	tree_item.set_text(0, path)
+	get_directory_list(path, tree_item)
+ 
+	
+
+func get_directory_list( path: String, tree_item: TreeItem ) -> void:
+	var dir = DirAccess.open(path)
+	
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			var new_tree_item = files_tree.create_item(tree_item)
+			new_tree_item.set_text(0, file_name )
+			if dir.current_is_dir():
+				print("DIR: " + path.path_join(file_name))
+				get_directory_list(path.path_join(file_name), new_tree_item)
+			else:
+				print("file: " + file_name)
+			file_name = dir.get_next()
+		dir.list_dir_end()

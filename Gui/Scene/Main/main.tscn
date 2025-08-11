@@ -66,6 +66,7 @@ layout_mode = 2
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer/HSplitContainer/LeftVBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 current_tab = 0
 
 [node name="FilesTabTree" type="Tree" parent="VBoxContainer/HSplitContainer/LeftVBoxContainer/TabContainer"]
