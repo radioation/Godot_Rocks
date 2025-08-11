@@ -4,8 +4,8 @@ extends SubViewportContainer
 @onready var cam: Camera3D      = $SubViewport/WorldRoot/Camera3D
 @onready var points_root: Node3D = $SubViewport/WorldRoot/PointCloudRoot
 
-@export var point_size: float = 0.01
-@export var num_points: int = 36
+@export var point_size: float = 0.05
+@export var num_points: int = 360
 @export var radius: float = 2.5
 
 
@@ -14,7 +14,8 @@ var points: Array[MeshInstance3D] = []
 
 
 # mouse control 
-var mouse_down : bool = false
+var left_mouse_down : bool = false
+var middle_mouse_down : bool = false
 var yaw : float = 0.0
 var pitch : float = -0.25
 var distance : float = 6.0
@@ -36,7 +37,7 @@ func _gui_input(e: InputEvent) -> void:
 	if e is InputEventMouseButton: 
 		var mbutton := e as InputEventMouseButton
 		if mbutton.button_index == MOUSE_BUTTON_LEFT:
-			mouse_down = mbutton.pressed
+			left_mouse_down = mbutton.pressed
 			accept_event()
 		elif mbutton.button_index == MOUSE_BUTTON_WHEEL_UP :
 			distance = max(0.2, distance * 0.9)
@@ -45,15 +46,24 @@ func _gui_input(e: InputEvent) -> void:
 		elif mbutton.button_index == MOUSE_BUTTON_WHEEL_DOWN :
 			distance *= 1.1
 			update_camera()
-			accept_event()			
+			accept_event()
+		elif mbutton.button_index == MOUSE_BUTTON_MIDDLE:
+			middle_mouse_down = mbutton.pressed
+			accept_event()
 	elif e is InputEventMouseMotion:
 		var m_motion := e as InputEventMouseMotion
-		if mouse_down:
+		if left_mouse_down:
 			yaw   -= m_motion.relative.x * 0.01
 			pitch = clamp(pitch - m_motion.relative.y * 0.01, -1.45, 1.45)
 			update_camera()
 			accept_event()			
-			
+		elif middle_mouse_down:
+			var right := cam.global_transform.basis.x
+			var up    := cam.global_transform.basis.y
+			center -= right * m_motion.relative.x * 0.002 * distance
+			center += up    * m_motion.relative.y * 0.002 * distance
+			update_camera()
+			accept_event()			
 			
 func update_camera() -> void:
 	var dir := Vector3(
@@ -69,7 +79,8 @@ func add_point(position: Vector3, color: Color = Color.WHITE, size: float = -1.0
 	mi.mesh = QuadMesh.new()
 	mi.material_override  = make_billboard_material(color)
 	mi.position = position 
-	mi.scale  = Vector3.ONE * 0.00001 # (size if size > 0.0 else point_size)
+	mi.scale  = Vector3.ONE *  (size if size > 0.0 else point_size)
+	print(mi.scale)
 	points_root.add_child(mi)
 	return mi
 
@@ -79,6 +90,7 @@ func make_billboard_material(color: Color) -> StandardMaterial3D:
 	m.albedo_color = color
 	m.albedo_texture = dot_tex
 	m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED   # Aways face camera
+	m.billboard_keep_scale = true     
 	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	m.vertex_color_use_as_albedo = false
 	m.disable_fog = true
@@ -102,8 +114,8 @@ func make_dot_texture(size: int) -> Texture2D:
 func create_points() -> void:
 	for i in num_points:
 		var angle = TAU * float(i) / float(max(1, num_points))
-		var p = Vector3(cos(angle), randf() * 0.6 - 0.3, sin(angle)) * radius
-		var c = Color.from_hsv(randf(), 0.8, 1.0, 1.0)
-		var n = add_point(p, c )
+		var pos = Vector3(cos(angle), randf() * 0.6 - 0.3, sin(angle)) * radius
+		var color = Color.from_hsv(randf(), 0.8, 1.0, 1.0)
+		var n = add_point(pos, color )
 		points.append(n)
 	
