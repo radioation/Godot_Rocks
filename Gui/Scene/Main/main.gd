@@ -1,6 +1,9 @@
 extends Control
 
 @export var about_scene : PackedScene
+@export var view2d_scene : PackedScene
+
+
 var about_dialog: Window
 
 @onready var menu_bar_1 : MenuBar = $VBoxContainer/HBoxContainer/MenuBar
@@ -10,6 +13,11 @@ var about_dialog: Window
 @onready var file_dialog: FileDialog = $FileDialog
 
 @onready var files_tree: Tree = $VBoxContainer/HSplitContainer/LeftVBoxContainer/TabContainer/FilesTabTree
+
+@onready var grid: GridContainer = $VBoxContainer/HSplitContainer/VSplitContainer/ScrollContainer/GridContainer
+const IMAGE_EXTS := { "png": true, "jpg": true, "jpeg": true, "bmp": true, "tga": true, "webp": true, "exr": true, "hdr": true }
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -45,10 +53,6 @@ func _setup_menu_1() -> void:
 	count += 1
 	file_popup.add_item("Dynamic Item ID: "+ str(count), count)
 	
-	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
-	file_dialog.access = FileDialog.ACCESS_FILESYSTEM
-	file_dialog.dir_selected.connect(_on_file_dialog_dir_selected)
-
 
 func _setup_menu_2() -> void:
 	var view_popup = menu_bar_1.get_menu_popup(1)
@@ -57,7 +61,20 @@ func _setup_menu_2() -> void:
 func _on_file_popup_menu_id_pressed(id: int) -> void:
 	print(" FILE MENU ID: %d " % id ) 
 	if id == 0 :
+		file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
+		file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+		file_dialog.clear_filename_filter()
+		file_dialog.dir_selected.connect(_on_file_dialog_dir_selected)
+
 		file_dialog.popup_centered()
+	elif id == 1:
+		file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+		file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+		file_dialog.filters = PackedStringArray(["*.png;*.jpg;*.jpeg;*.bmp;*.tga;*.webp;*.exr;*.hdr;*.glb;*.gltf;*.obj;*.dae;*.mesh ; Images & 3D"])
+	
+		file_dialog.file_selected.connect(_on_file_dialog_file_selected)
+		file_dialog.popup_centered()
+		
 
  
 func _on_help_popupmenu_id_pressed(id: int) -> void:
@@ -117,3 +134,12 @@ func get_directory_list( path: String, tree_item: TreeItem ) -> void:
 func _on_files_tab_tree_item_selected() -> void:
 	var tree_item = files_tree.get_selected()
 	print( "SELECTED: %s - %s" % [ tree_item.get_text(0), tree_item.get_metadata(0) ] )
+
+
+
+func _on_file_dialog_file_selected(path: String) -> void:
+	print("FILE: %s" % path) 
+	var v: Control = view2d_scene.instantiate()
+	grid.add_child(v)
+	v.call_deferred("load_image", path )
+	
