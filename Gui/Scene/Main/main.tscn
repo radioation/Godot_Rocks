@@ -135,4 +135,5 @@ file_mode = 2
 
 [connection signal="id_pressed" from="VBoxContainer/HBoxContainer/MenuBar/File" to="." method="_on_file_popup_menu_id_pressed"]
 [connection signal="id_pressed" from="VBoxContainer/HBoxContainer/MenuBar2/Help" to="." method="_on_help_popupmenu_id_pressed"]
+[connection signal="item_selected" from="VBoxContainer/HSplitContainer/LeftVBoxContainer/TabContainer/FilesTabTree" to="." method="_on_files_tab_tree_item_selected"]
 [connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]

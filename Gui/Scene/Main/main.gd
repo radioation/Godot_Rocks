@@ -101,6 +101,7 @@ func get_directory_list( path: String, tree_item: TreeItem ) -> void:
 		while file_name != "":
 			var new_tree_item = files_tree.create_item(tree_item)
 			new_tree_item.set_text(0, file_name )
+			new_tree_item.set_metadata(0, path.path_join(file_name))
 			if dir.current_is_dir():
 				print("DIR: " + path.path_join(file_name))
 				get_directory_list(path.path_join(file_name), new_tree_item)
@@ -108,3 +109,11 @@ func get_directory_list( path: String, tree_item: TreeItem ) -> void:
 				print("file: " + file_name)
 			file_name = dir.get_next()
 		dir.list_dir_end()
+
+
+ 
+
+
+func _on_files_tab_tree_item_selected() -> void:
+	var tree_item = files_tree.get_selected()
+	print( "SELECTED: %s - %s" % [ tree_item.get_text(0), tree_item.get_metadata(0) ] )

@@ -98,7 +98,7 @@ pretty trivial to fill up
 ```
 
 
-filesystem example
+filesystem example using Metadata to store full paths
 ```gd
 func get_directory_list( path: String, tree_item: TreeItem ) -> void:
     var dir = DirAccess.open(path)
@@ -108,7 +108,12 @@ func get_directory_list( path: String, tree_item: TreeItem ) -> void:
         var file_name = dir.get_next()
         while file_name != "":
             var new_tree_item = files_tree.create_item(tree_item)
-            new_tree_item.set_text(0, file_name )
+
+            
+            new_tree_item.set_text(0, file_name )   # DISPLAYS JUST THE LEAF
+            new_tree_item.set_metadata(0, path.path_join(file_name))  # STORES TEH WHOLE PATH
+
+
             if dir.current_is_dir():
                 print("DIR: " + path.path_join(file_name))
                 get_directory_list(path.path_join(file_name), new_tree_item)
@@ -117,5 +122,12 @@ func get_directory_list( path: String, tree_item: TreeItem ) -> void:
             file_name = dir.get_next()
         dir.list_dir_end()
 ```
+and access with the `_item_selected()` signal
+```gd
+func _on_files_tab_tree_item_selected() -> void:
+    var tree_item = files_tree.get_selected()
+    print( "SELECTED: %s - %s" % [ tree_item.get_text(0), tree_item.get_metadata(0) ] )
+```
+
 
 
