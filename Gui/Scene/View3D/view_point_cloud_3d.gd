@@ -13,6 +13,13 @@ var dot_tex: Texture2D
 var points: Array[MeshInstance3D] = []
 
 
+# mouse control 
+var mouse_down : bool = false
+var yaw : float = 0.0
+var pitch : float = -0.25
+var distance : float = 6.0
+var center := Vector3.ZERO
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	dot_tex = make_dot_texture(64)
@@ -21,8 +28,33 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
-
+	set_process(true)
+	
+	
+	
+func _gui_input(e: InputEvent) -> void: 
+	if e is InputEventMouseButton: 
+		var mbutton := e as InputEventMouseButton
+		if mbutton.button_index == MOUSE_BUTTON_LEFT:
+			mouse_down = true
+	elif e is InputEventMouseMotion:
+		var m_motion := e as InputEventMouseMotion
+		if mouse_down:
+			yaw   -= m_motion.relative.x * 0.01
+			pitch = clamp(pitch - m_motion.relative.y * 0.01, -1.45, 1.45)
+			update_camera()
+			accept_event()			
+			
+			
+func update_camera() -> void:
+	var dir := Vector3(
+		cos(pitch) * sin(yaw),
+		sin(pitch),
+		cos(pitch) * cos(yaw)
+	)
+	cam.global_transform.origin = center - dir * distance
+	cam.look_at(center, Vector3.UP)
+	
 func add_point(position: Vector3, color: Color = Color.WHITE, size: float = -1.0) -> MeshInstance3D:
 	var mi := MeshInstance3D.new()
 	mi.mesh = QuadMesh.new()
