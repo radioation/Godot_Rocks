@@ -2,6 +2,7 @@ extends Control
 
 @export var about_scene : PackedScene
 @export var view2d_scene : PackedScene
+@export var view_pcl_3d_scene : PackedScene 
 
 
 var about_dialog: Window
@@ -38,6 +39,8 @@ func _ready() -> void:
 	
 
 
+	var v: Control = view_pcl_3d_scene.instantiate()
+	grid.add_child(v) 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
