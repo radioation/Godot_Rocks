@@ -7,7 +7,15 @@ extends Control
 var file_path : String = ""
 var image_size := Vector2.ZERO
 
-var zoom := 1.0
+var zoom : float= 1.0
+
+
+var pan := Vector2.ZERO
+var dragging : bool= false
+var drag_start := Vector2.ZERO
+
+@export var zoom_min: float = 0.5
+@export var zoom_max: float = 10.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -33,10 +41,28 @@ func load_image(path: String) -> void:
 	_update_layout()
 
 
+func _gui_input(e: InputEvent) -> void:
+	if e is InputEventMouseButton:
+		var mb := e as InputEventMouseButton
+		if mb.button_index == MOUSE_BUTTON_WHEEL_UP and mb.pressed:
+			zoom = clamp(zoom * 1.1, zoom_min, zoom_max)
+			_update_layout()
+		elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN and mb.pressed:
+			zoom = clamp(zoom / 1.1,  zoom_min, zoom_max)
+			_update_layout()
+		elif mb.button_index == MOUSE_BUTTON_LEFT:
+			dragging = mb.pressed
+			drag_start = get_local_mouse_position()
+	elif e is InputEventMouseMotion and dragging:
+		var mm := e as InputEventMouseMotion
+		pan += mm.relative
+		_update_layout()
+
 func _update_layout() -> void: 
 	if tex_rect.texture:
+		print("ZOOM: %.4f" % zoom )
 		var scaled := image_size * zoom
 		tex_rect.custom_minimum_size = scaled
 		tex_rect.size = scaled
-		tex_rect.position = (size - scaled) * 0.5  
+		tex_rect.position = (size - scaled) * 0.5  * pan
 		overlay.text = "%s  |  Zoom: %.2fx" % [file_path.get_file(), zoom]
