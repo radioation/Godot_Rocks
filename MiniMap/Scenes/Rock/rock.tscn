@@ -12,6 +12,7 @@ angular_damp_mode = 1
 script = ExtResource("1_icfck")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visibility_layer = 3
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_ayfl1")
 

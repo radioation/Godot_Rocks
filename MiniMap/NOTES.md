@@ -57,3 +57,42 @@ which will move the camera around with the player.
    `Camera2D > Limit > Bottom` = 1600
   
 
+
+# Simpler minimap
+* added a SPrite2D to main with simplified background (`bg_tenth.png`)
+  * scaled sprite up to match the main background size
+  * changed the visibilty layer of this background sprite to 2 (removed 1)
+
+* Added layer 2 to the Main scene's visibility layer
+* updated main.gd to set the main viewport to disable rendering layer 2
+
+```gd
+func _ready() -> void:
+    #playarea = get_viewport().get_visible_rect().size
+    playarea = Vector2( 2560, 1600)
+
+    # Get the root Viewport
+    var main_viewport = get_tree().root.get_viewport()
+
+    # Disable rendering of Layer 2 in the main view
+    main_viewport.canvas_cull_mask = main_viewport.canvas_cull_mask - 2 # -2 for Layer 2, 
+```
+* Set the Sprite2D Visibility Layer to 2 for both the Ship and ROck sceneds.
+
+* updated main.gd to set the visiblity layer of rocks it spwans
+```gd
+func spawn_rocks( count : int ) -> void:
+    for i in count:
+        var r = rock_scene.instantiate()    
+        r.playarea = playarea
+        r.position = Vector2( randf_range(0, playarea.x), randf_range(0, playarea.y))
+        r.linear_velocity = Vector2.RIGHT.rotated(randf_range(0, TAU)) * randf_range( 225.0, 250.0)
+        r.visibility_layer = r.visibility_layer + 2
+        add_child(r)
+```
+
+* selected Subviewport and took layer 1 out of its cull mask
+
+
+
+
