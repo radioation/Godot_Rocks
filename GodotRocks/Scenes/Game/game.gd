@@ -42,7 +42,7 @@ func _process(delta: float) -> void:
 		$UfoTimer.start( randf_range( 10.0, 30))
 
 func start_wave( current_level: int ) -> void:
-	var num_rocks = 2 + current_level * 2
+	var num_rocks = 5 + current_level * 3
 	$HUD.set_message("Wave " + str(current_level) )
 	$Timer.start(3)
 	await $Timer.timeout
