@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cbs23plueky3"]
+[gd_scene load_steps=5 format=3 uid="uid://cbs23plueky3"]
 
 [ext_resource type="Script" uid="uid://xdlgb06l5jgh" path="res://Scenes/Rock/rock.gd" id="1_icfck"]
+[ext_resource type="Texture2D" uid="uid://bxjusuwj6bolm" path="res://assets/whiteball.png" id="2_1cgox"]
 [ext_resource type="Texture2D" uid="uid://b1gnfn0q0s4x6" path="res://assets/Rock_256w.png" id="2_ayfl1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_icfck"]
@@ -11,8 +12,13 @@ linear_damp_mode = 1
 angular_damp_mode = 1
 script = ExtResource("1_icfck")
 
+[node name="SpriteMini" type="Sprite2D" parent="."]
+visibility_layer = 2
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_1cgox")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visibility_layer = 3
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_ayfl1")
 

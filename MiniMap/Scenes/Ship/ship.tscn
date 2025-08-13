@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0krawoxfs01"]
+[gd_scene load_steps=5 format=3 uid="uid://c0krawoxfs01"]
 
 [ext_resource type="Script" uid="uid://bsq6bwuakkxsg" path="res://Scenes/Ship/ship.gd" id="1_0beu4"]
 [ext_resource type="Texture2D" uid="uid://cpouug4h6hsi2" path="res://assets/Ship_000.png" id="1_qkeub"]
+[ext_resource type="Texture2D" uid="uid://b8ls0r25wy7q5" path="res://assets/greenball.png" id="3_awow7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qkeub"]
 radius = 17.0294
@@ -22,3 +23,8 @@ limit_left = 0
 limit_top = 0
 limit_right = 2560
 limit_bottom = 1600
+
+[node name="MiniMapSprite" type="Sprite2D" parent="."]
+visibility_layer = 2
+scale = Vector2(2, 2)
+texture = ExtResource("3_awow7")
