@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbs23plueky3"]
+
+[ext_resource type="Script" uid="uid://xdlgb06l5jgh" path="res://Scenes/Rock/rock.gd" id="1_icfck"]
+[ext_resource type="Texture2D" uid="uid://b1gnfn0q0s4x6" path="res://assets/Rock_256w.png" id="2_ayfl1"]
+
+[node name="Rock" type="RigidBody2D"]
+script = ExtResource("1_icfck")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_ayfl1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
