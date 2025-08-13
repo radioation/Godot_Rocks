@@ -1,9 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5c725qg88o05"]
+[gd_scene load_steps=5 format=3 uid="uid://b5c725qg88o05"]
 
 [ext_resource type="Script" uid="uid://b5gj5ug0dvpoo" path="res://Scenes/Main/main.gd" id="1_1r6ip"]
 [ext_resource type="PackedScene" uid="uid://c0krawoxfs01" path="res://Scenes/Ship/ship.tscn" id="2_lixft"]
+[ext_resource type="PackedScene" uid="uid://cbs23plueky3" path="res://Scenes/Rock/rock.tscn" id="2_qw60k"]
+[ext_resource type="Texture2D" uid="uid://bp5tucr5y121j" path="res://assets/bg.png" id="3_5yls4"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1r6ip")
+rock_scene = ExtResource("2_qw60k")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_5yls4")
 
 [node name="Ship" parent="." instance=ExtResource("2_lixft")]
