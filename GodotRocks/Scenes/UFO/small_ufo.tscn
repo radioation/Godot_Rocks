@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://cya01t5l5w62g"]
+[gd_scene load_steps=16 format=3 uid="uid://cya01t5l5w62g"]
 
 [ext_resource type="Script" uid="uid://b16kgny6ta3mo" path="res://Scenes/UFO/small_ufo.gd" id="1_2wmys"]
 [ext_resource type="Texture2D" uid="uid://6g57iyjs3lei" path="res://assets/sprites/combinedSmallUFO_8f_168w.png" id="2_bq82t"]
 [ext_resource type="PackedScene" uid="uid://cjekoxpmx0qnn" path="res://Scenes/Explosion/explosion.tscn" id="3_e23do"]
 [ext_resource type="AudioStream" uid="uid://brqyqd310112c" path="res://assets/sounds/explosion.wav" id="4_04nwc"]
+[ext_resource type="Texture2D" uid="uid://df7o2nv8ohmg7" path="res://assets/sprites/redball.png" id="5_vkk7i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e23do"]
 atlas = ExtResource("2_bq82t")
@@ -89,3 +90,7 @@ visible = false
 
 [node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_04nwc")
+
+[node name="MinimapSprite" type="Sprite2D" parent="."]
+visibility_layer = 2
+texture = ExtResource("5_vkk7i")

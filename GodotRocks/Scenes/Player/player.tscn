@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://dm7abuytgx7os"]
+[gd_scene load_steps=74 format=3 uid="uid://dm7abuytgx7os"]
 
 [ext_resource type="Script" uid="uid://bws1ciykln34d" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://cf1qu800wro2d" path="res://assets/sprites/Ship_000.png" id="1_uvnfx"]
@@ -71,6 +71,7 @@
 [ext_resource type="Texture2D" uid="uid://dmme0ske6nl10" path="res://assets/sprites/ship_frames/Ship_063.png" id="66_44cd3"]
 [ext_resource type="PackedScene" uid="uid://cjekoxpmx0qnn" path="res://Scenes/Explosion/explosion.tscn" id="69_hlqkp"]
 [ext_resource type="AudioStream" uid="uid://bp31awgskklgy" path="res://assets/sounds/thruster_clip.wav" id="70_rbwwl"]
+[ext_resource type="Texture2D" uid="uid://dwnjjd8y5dqob" path="res://assets/sprites/greenball.png" id="72_geihd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uvnfx"]
 radius = 17.1172
@@ -120,6 +121,11 @@ stream = ExtResource("70_rbwwl")
 volume_db = -3.564
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="MinimapSprite" type="Sprite2D" parent="."]
+visibility_layer = 2
+scale = Vector2(2, 2)
+texture = ExtResource("72_geihd")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="SecondaryShotCooldownTimer" to="." method="_on_secondary_shot_cooldown_timer_timeout"]

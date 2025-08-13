@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://uw4ew7wn3ncb"]
+[gd_scene load_steps=17 format=3 uid="uid://uw4ew7wn3ncb"]
 
 [ext_resource type="Texture2D" uid="uid://blyg24nuclubk" path="res://assets/sprites/combinedUFO_8f_256w.png" id="1_ouq1r"]
 [ext_resource type="Script" uid="uid://kwwrvlgii6sa" path="res://Scenes/UFO/ufo.gd" id="1_prjrd"]
 [ext_resource type="PackedScene" uid="uid://bbfnbb26soduw" path="res://Scenes/RedShot/red_shot.tscn" id="2_bpsto"]
 [ext_resource type="AudioStream" uid="uid://c0pelabng0bu7" path="res://assets/sounds/explosion_clip_1.wav" id="4_bpsto"]
 [ext_resource type="PackedScene" uid="uid://cjekoxpmx0qnn" path="res://Scenes/Explosion/explosion.tscn" id="4_jiqr7"]
+[ext_resource type="Texture2D" uid="uid://df7o2nv8ohmg7" path="res://assets/sprites/redball.png" id="6_oio45"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4ria"]
 atlas = ExtResource("1_ouq1r")
@@ -94,6 +95,11 @@ stream = ExtResource("4_bpsto")
 
 [node name="ShotTimer" type="Timer" parent="."]
 wait_time = 2.5
+
+[node name="MinimapSprite" type="Sprite2D" parent="."]
+visibility_layer = 2
+scale = Vector2(2, 2)
+texture = ExtResource("6_oio45")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]

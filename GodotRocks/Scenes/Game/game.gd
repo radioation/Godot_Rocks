@@ -13,6 +13,8 @@ var lives : int = 3
 func _ready() -> void:
 	$HUD/VBoxContainer/Button.hide()
 	$HUD.set_message("")
+	
+
 	start_game()
 		#$UfoTimer.start( randf_range( ,20 ) )
 	
@@ -80,6 +82,7 @@ func create_rock_in_range(  size: int, max_x: int, max_y: int ) -> void:
 func create_rock( size, pos: Vector2, vel: Vector2):
 	var rock = rock_scene.instantiate()
 	rock.start(size, pos, vel)
+	rock.visibility_layer = rock.visibility_layer + 2
 	get_tree().current_scene.add_child( rock )
 	rock.destroyed.connect( self._on_rock_destroyed )
 		
@@ -146,6 +149,8 @@ func _on_ufo_timer_timeout():
 
 		var u = ufo_scene.instantiate()  
 		u.position = get_random_ufo_start_position()
+		
+		u.visibility_layer = u.visibility_layer + 2
 		u.destroyed.connect( self._on_ufo_destroyed )
 		#ufo.max_force = 5500
 		call_deferred("add_child", u)
@@ -156,6 +161,7 @@ func _on_ufo_timer_timeout():
 			var u = small_ufo_scene.instantiate()  
 			u.position = pos + Vector2( randf_range( 10.0, 20.0 ), randf_range( 10.0, 20.0 ))
 			
+			u.visibility_layer = u.visibility_layer + 2
 			u.destroyed.connect( self._on_ufo_destroyed )
 			call_deferred("add_child", u)
 			

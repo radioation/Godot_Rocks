@@ -1,4 +1,4 @@
-[gd_scene load_steps=251 format=3 uid="uid://c2fco36kw2sn5"]
+[gd_scene load_steps=252 format=3 uid="uid://c2fco36kw2sn5"]
 
 [ext_resource type="Script" uid="uid://b6n301bw3dfsd" path="res://Scenes/Rock/rock.gd" id="1_0gmrd"]
 [ext_resource type="Texture2D" uid="uid://7mlh485gmsix" path="res://assets/sprites/rocks/rock1_sheet.png" id="1_1cgox"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cjekoxpmx0qnn" path="res://Scenes/Explosion/explosion.tscn" id="6_qivvq"]
 [ext_resource type="AudioStream" uid="uid://brqyqd310112c" path="res://assets/sounds/explosion.wav" id="7_mulqw"]
 [ext_resource type="AudioStream" uid="uid://6ar1ct7ck53l" path="res://assets/sounds/Laser_Shoot17_breaker.wav" id="8_5gfxh"]
+[ext_resource type="Texture2D" uid="uid://btrnlk6q7o635" path="res://assets/sprites/whiteball.png" id="9_8nnff"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5gfxh"]
 atlas = ExtResource("1_1cgox")
@@ -1737,3 +1738,8 @@ stream = ExtResource("7_mulqw")
 [node name="HitSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_5gfxh")
 volume_db = -2.133
+
+[node name="MinimapSprite" type="Sprite2D" parent="."]
+visibility_layer = 2
+scale = Vector2(3, 3)
+texture = ExtResource("9_8nnff")

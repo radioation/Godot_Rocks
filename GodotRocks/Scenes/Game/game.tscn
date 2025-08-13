@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://w0vyy5u6bxij"]
+[gd_scene load_steps=11 format=3 uid="uid://w0vyy5u6bxij"]
 
 [ext_resource type="Script" uid="uid://cy5ysmjfrl50c" path="res://Scenes/Game/game.gd" id="1_mv0hc"]
 [ext_resource type="PackedScene" uid="uid://c2fco36kw2sn5" path="res://Scenes/Rock/rock.tscn" id="2_qikps"]
@@ -8,8 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://cosln12vsknok" path="res://assets/bg/bg.png" id="5_ciybh"]
 [ext_resource type="PackedScene" uid="uid://dschjhap3lsne" path="res://Scenes/HUD/hud.tscn" id="6_flgk0"]
 [ext_resource type="AudioStream" uid="uid://baj65nm26qio8" path="res://assets/sounds/Randomize4_SIN.wav" id="8_xfil1"]
+[ext_resource type="Script" uid="uid://ds03wxmiddf3u" path="res://Scenes/Game/sub_viewport.gd" id="9_huoen"]
+[ext_resource type="Texture2D" uid="uid://du8q0h21by3d0" path="res://assets/bg/bg_tenth.png" id="10_7jvlm"]
 
 [node name="Game" type="Node2D"]
+visibility_layer = 3
 script = ExtResource("1_mv0hc")
 rock_scene = ExtResource("2_qikps")
 ufo_scene = ExtResource("3_i1e5p")
@@ -18,6 +21,7 @@ small_ufo_scene = ExtResource("4_vifcx")
 [node name="Timer" type="Timer" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("4_i1e5p")]
+visibility_layer = 3
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 40.0
@@ -34,6 +38,40 @@ wait_time = 30.0
 [node name="UfoSpawnSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_xfil1")
 volume_db = -22.941
+
+[node name="MInimapCanvas" type="CanvasLayer" parent="."]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MInimapCanvas"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -256.0
+offset_top = -160.0
+grow_horizontal = 0
+grow_vertical = 0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MInimapCanvas/SubViewportContainer" node_paths=PackedStringArray("camera_2d", "player")]
+canvas_cull_mask = 4294967294
+size = Vector2i(256, 160)
+script = ExtResource("9_huoen")
+camera_2d = NodePath("Camera2D")
+player = NodePath("../../../Player")
+
+[node name="Camera2D" type="Camera2D" parent="MInimapCanvas/SubViewportContainer/SubViewport"]
+zoom = Vector2(0.1, 0.1)
+limit_left = 0
+limit_top = 0
+limit_right = 2560
+limit_bottom = 1600
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visibility_layer = 2
+position = Vector2(1280, 800)
+scale = Vector2(10, 10)
+texture = ExtResource("10_7jvlm")
 
 [connection signal="death" from="Player" to="." method="_on_player_death"]
 [connection signal="hit_points_changed" from="Player" to="." method="_on_player_hit_points_changed"]

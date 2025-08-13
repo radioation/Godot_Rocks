@@ -75,7 +75,8 @@ func _ready() -> void:
     var main_viewport = get_tree().root.get_viewport()
 
     # Disable rendering of Layer 2 in the main view
-    main_viewport.canvas_cull_mask = main_viewport.canvas_cull_mask - 2 # -2 for Layer 2, 
+    if main_viewport.canvas_cull_mask & 2:
+        main_viewport.canvas_cull_mask = main_viewport.canvas_cull_mask - 2 # -2 for Layer 2, 
 ```
 * Set the Sprite2D Visibility Layer to 2 for both the Ship and Rock scenes.
 
