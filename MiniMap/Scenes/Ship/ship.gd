@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 @export var power : float = 400
-@export var rotate_power : float = 5000
+@export var rotate_power : float = 3000
 
 
 
@@ -22,8 +22,7 @@ func _physics_process(delta: float) :
 func get_input():  
 	if Input.is_action_pressed("thrust"):  
 		thrust = transform.x * power
-		if not $EngineSound.playing:
-			$EngineSound.play()
+ 
 	rotation_dir = Input.get_axis("rotate_left", "rotate_right")
  
 func _integrate_forces(physics_state: PhysicsDirectBodyState2D) :

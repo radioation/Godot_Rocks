@@ -5,7 +5,8 @@ extends Node2D
 var playarea : Vector2 = Vector2.ZERO
 
 func _ready() -> void:
-	playarea = get_viewport().get_visible_rect().size
+	#playarea = get_viewport().get_visible_rect().size
+	playarea = Vector2( 2560, 1600)
 	# make rocks
 	spawn_rocks(20)
 	$Ship.playarea = playarea
