@@ -120,7 +120,20 @@ func _physics_process(delta: float) -> void:
 **IMP** if you *ACTUALLY SELECT* a tile, you can see a `Physics` section 
 in the TIleSet Atlas 
   for a selected tile press `F` to create a collision rectangle. 
-  * Edit the shapes as needed*
+  * Edit the shapes as needed
+
+**IMP** SEAMS MATTER. IF your collision shapes don't exaclty match, your player 
+may catch on an edge  **TURN ON THE GID SNAP TOOL** (looks like a little horseshoe magnet)
+
+
+
+
+
+## Make Level
+* select `TileMap` at the bottom of the editor to start editing the tilemaplayer
+ * choose tile in the bottom window
+ * place them in the main window area
+
 
 
 
