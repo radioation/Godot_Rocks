@@ -14,10 +14,24 @@ config/name="Platform"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=800
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
 [dotnet]
 
 project/assembly_name="Platform"
 
+[layer_names]
+
+2d_physics/layer_1="env"
+2d_physics/layer_2="player"
+2d_physics/layer_3="mobs"
+
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
