@@ -99,9 +99,20 @@ func _physics_process(delta: float) -> void:
 
 
 
+# Basic tilemap(Layer)
+[this](https://docs.godotengine.org/en/stable/tutorials/2d/using_tilesets.html) but for my image
+**IMP** TileMap is deprecated. Use multiple TileMapLayer nodes instead.
 
+* Added TileMapLayer to Main scend
+  * Use `Inspector | TileMapLAyer > Tile Set` to create a new `TileSet`
+    * Use `Inspector | TileMapLAyer > Tile Set > Tile Shape` to `Square`
+    * Use `Inspector | TileMapLAyer > Tile Set > Tile Size` to `32,32`
+* Click `TileSet` at the bottom of the editor and drag tileshee to it
+  (let it automagically create the tiles)
+  * gave it a name 'Terrain' in the Bottom editor ( under Atlas)
 
-# Basic tilemap
+## Add collision
+
 
 
 
