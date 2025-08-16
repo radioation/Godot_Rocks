@@ -112,6 +112,15 @@ func _physics_process(delta: float) -> void:
   * gave it a name 'Terrain' in the Bottom editor ( under Atlas)
 
 ## Add collision
+* need to craete physics layer. 
+  * Select the `TileMapLayer` node  and use 
+    `Inspector | TileMapLayer > Tile Set > Physics Layers > + Add Element`
+     to create a physics layer
+
+**IMP** if you *ACTUALLY SELECT* a tile, you can see a `Physics` section 
+in the TIleSet Atlas 
+  for a selected tile press `F` to create a collision rectangle. 
+  * Edit the shapes as needed*
 
 
 

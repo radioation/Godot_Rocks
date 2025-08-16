@@ -9,7 +9,7 @@ enum { IDLE, WALK, JUMP }
 var current_state = IDLE
 
 
-# Called when the node enters the scene tree for the first time.
+# Called when the node enters the scene tree for the first timfffe.
 func _ready() -> void:
 	pass # Replace with function body.
 
