@@ -88,9 +88,14 @@ func _physics_process(delta: float) -> void:
 ```
 
 ## Simple Platform
-* Add a `StaticBody2D` with a `SollisionShape2D` child (with rectangle shape) for a platform
+* Instantiate a Player in your main scene
 
+* Add a `StaticBody2D` with a `CollisionShape2D` child (with rectangle shape) for a platform
+  ( so `Main > StaticBody2D > CollisionShape2D`  )
 
+* Position both the player and shape in your screen  (use your judgement)
+* check `Debug > Visible Collision Shape` so you can see the platform when you run
+  the game.
 
 
 
