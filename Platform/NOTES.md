@@ -125,7 +125,9 @@ in the TIleSet Atlas
 **IMP** SEAMS MATTER. IF your collision shapes don't exaclty match, your player 
 may catch on an edge  **TURN ON THE GID SNAP TOOL** (looks like a little horseshoe magnet)
 
-
+**IMP** ONE WAY TILES (so you can jump up through them )
+  * when you mkae your collison shape, expand the `Polygon` below
+    it and check the `One Way` checkbox. Default behavior lets you fall through
 
 
 
@@ -140,6 +142,7 @@ may catch on an edge  **TURN ON THE GID SNAP TOOL** (looks like a little horsesh
 
 
 # scrolling playfield
-
+* just draw a big playfield and *ADD A CAMERA2D* to the playerw 
+* set `Inspector | Camera2D > Limit` to whaever fits your level.
 
 

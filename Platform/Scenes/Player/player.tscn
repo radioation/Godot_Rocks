@@ -148,8 +148,14 @@ position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_mtuoh")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.39506
+frame_progress = 0.64906
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -30)
 shape = SubResource("RectangleShape2D_xpcdj")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_right = 2560
+limit_bottom = 816

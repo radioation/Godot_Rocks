@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 @export var walk_speed = 200
-@export var jump_speed = -200
-@export var gravity = 400
+@export var jump_speed = -300
+@export var gravity = 700
 
 
 enum { IDLE, WALK, JUMP }
