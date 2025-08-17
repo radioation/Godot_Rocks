@@ -151,10 +151,17 @@ func read_input(delta: float) -> void:
 		plane.x = plane.x * cos( rot_speed) - plane.y * sin( rot_speed )
 		plane.y = old_plane.x * sin( rot_speed) + plane.y * cos( rot_speed )
 		
-	#print("dir_angle %.4f" % dir_angle)
-	#dir_vec = Vector2(cos(dir_angle), sin(dir_angle))
-	#plane = dir_vec.orthogonal()
-	
+  
+	# STRAFE
+	var right :Vector2 = dir.orthogonal().normalized()  * move_speed
+	if Input.is_action_pressed("ui_right"):
+		var temp_pos = pos + right
+		if world_map[ int(temp_pos.x ) ][int(temp_pos.y)]==0:
+			pos = temp_pos
+	if Input.is_action_pressed("ui_left"):
+		var temp_pos = pos - right
+		if world_map[ int(temp_pos.x ) ][int(temp_pos.y)]==0:
+			pos = temp_pos 
 
  
 
