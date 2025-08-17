@@ -106,7 +106,7 @@ func read_input(delta: float) -> void:
 			pos.x -= dir_vec.x * move_speed 
 		if world_map[int(pos.x)][ int(pos.y - dir_vec.y * move_speed ) ]==0:
 			pos.y -= dir_vec.y * move_speed 
-	print("pos: " + str(pos))
+	#print("pos: " + str(pos))
 
 	var rot_speed = rot_speed_d
 	#//rotate to the right
@@ -127,7 +127,7 @@ func read_input(delta: float) -> void:
 	if Input.is_action_pressed("left"):
 		dir_angle -= rot_speed * delta
 		
-	print("dir_angle %.4f" % dir_angle)
+	#print("dir_angle %.4f" % dir_angle)
 	dir_vec = Vector2(cos(dir_angle), sin(dir_angle))
 	#plane = dir_vec.orthogonal()
 	
@@ -262,8 +262,8 @@ func _draw() -> void:
 			perp_wall_dist = side_dist.x - delta_dist.x
 		else:
 			perp_wall_dist = side_dist.y - delta_dist.y
-
- 
+			
+		#print("perp wall dist " + str(perp_wall_dist))
 		if perp_wall_dist <= 0.0001:
 			perp_wall_dist = 0.0001
 
@@ -309,9 +309,20 @@ func _draw() -> void:
 		if side == 1:
 			shade *= 0.8
 
+		var wall_texture: Texture2D = wall_texture1
+		var texture_num = world_map[ map_x][map_y]
+		if texture_num == 1:
+			wall_texture = wall_texture1
+		elif texture_num == 2:
+			wall_texture = wall_texture2
+		elif  texture_num == 3:
+			wall_texture = wall_texture3
+		elif  texture_num == 4:
+			wall_texture = wall_texture4
 		#print("dest_rect : " + str(dest_rect) + " src: " + str(src_rect))
+		
 		draw_texture_rect_region(
-			wall_texture1,
+			wall_texture,
 			dest_rect,
 			src_rect,                 # no tile
 			Color(shade, shade, shade, 1.0)
