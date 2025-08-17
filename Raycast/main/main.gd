@@ -16,7 +16,6 @@ const TILE : float= 1.0               # map cell size (world units)
 
 @export	var wall_tex_size : Vector2
 @export	var half_h : float
-@export	var dir_vec : Vector2
 
 @export var move_speed_d :float = 2.5
 @export var rot_speed_d :float= 1.8
@@ -53,7 +52,10 @@ var world_map := [
 #double dirX = -1.0, dirY = 0.0; //initial direction vector (180 == PI)
 #double planeX = 0.0, planeY = 0.66; //the 2d raycaster version of camera plane
 var pos := Vector2(5.8,1.8)    #  X and Y start position 
-var dir_angle := PI           # radians
+#var dir_angle := PI           # radians
+#var dir_vec : Vector2
+var dir: = Vector2( -1.0, 0.0 )
+var plane: = Vector2( 0.0, 0.66 )
 
 
 var zbuffer := PackedFloat32Array() # for sprite depth when we add them.
@@ -64,7 +66,7 @@ func _ready() -> void:
 	
 	wall_tex_size = wall_texture1.get_size() 
 	half_h = SCREEN_H * 0.5
-	dir_vec = Vector2(cos(dir_angle), sin(dir_angle))
+	#dir_vec = Vector2(cos(dir_angle), sin(dir_angle))
 	 
 	set_process(true)
 
@@ -91,10 +93,10 @@ func read_input(delta: float) -> void:
 	#if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
 	#}
 	if Input.is_action_pressed("ui_up"):
-		if world_map[ int(pos.x + dir_vec.x * move_speed ) ][int(pos.y)] == 0:
-			pos.x += dir_vec.x * move_speed 
-		if world_map[int(pos.x)][ int(pos.y + dir_vec.y * move_speed ) ] == 0:
-			pos.y += dir_vec.y * move_speed 
+		if world_map[ int(pos.x + dir.x * move_speed ) ][int(pos.y)] == 0:
+			pos.x += dir.x * move_speed 
+		if world_map[int(pos.x)][ int(pos.y + dir.y * move_speed ) ] == 0:
+			pos.y += dir.y * move_speed 
 	#//move backwards if no wall behind you
 	#if(keyDown(SDLK_DOWN))
 	#{
@@ -102,13 +104,13 @@ func read_input(delta: float) -> void:
 	#if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
 	#}	
 	if Input.is_action_pressed("ui_down"):
-		if world_map[ int(pos.x - dir_vec.x * move_speed ) ][int(pos.y)]==0:
-			pos.x -= dir_vec.x * move_speed 
-		if world_map[int(pos.x)][ int(pos.y - dir_vec.y * move_speed ) ]==0:
-			pos.y -= dir_vec.y * move_speed 
+		if world_map[ int(pos.x - dir.x * move_speed ) ][int(pos.y)]==0:
+			pos.x -= dir.x * move_speed 
+		if world_map[int(pos.x)][ int(pos.y - dir.y * move_speed ) ]==0:
+			pos.y -= dir.y * move_speed 
 	#print("pos: " + str(pos))
 
-	var rot_speed = rot_speed_d
+	var rot_speed = delta * rot_speed_d
 	#//rotate to the right
 	#if(keyDown(SDLK_RIGHT))
 	#{
@@ -121,14 +123,36 @@ func read_input(delta: float) -> void:
 	#planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
 	#}	
 	if Input.is_action_pressed("right"):
-		dir_angle += rot_speed * delta
-		
-		
+		#dir_angle += rot_speed * delta
+		var old_dir = dir
+		dir.x = dir.x * cos( - rot_speed ) - dir.y * sin( - rot_speed )
+		dir.y = old_dir.x * sin( - rot_speed ) + dir.y * cos( - rot_speed )
+		var old_plane = plane
+		plane.x = plane.x * cos( -rot_speed) - plane.y * sin( -rot_speed )
+		plane.y = old_plane.x * sin( -rot_speed) + plane.y * cos( -rot_speed )
+	#//rotate to the left
+	#if(keyDown(SDLK_LEFT))
+	#{
+	#//both camera direction and camera plane must be rotated
+	#double oldDirX = dirX;
+	#dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
+	#dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
+	#double oldPlaneX = planeX;
+	#planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
+	#planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
+	#}
+
 	if Input.is_action_pressed("left"):
-		dir_angle -= rot_speed * delta
+		#dir_angle -= rot_speed * delta
+		var old_dir = dir
+		dir.x = dir.x * cos( rot_speed ) - dir.y * sin( rot_speed )
+		dir.y = old_dir.x * sin( rot_speed ) + dir.y * cos( rot_speed )
+		var old_plane = plane
+		plane.x = plane.x * cos( rot_speed) - plane.y * sin( rot_speed )
+		plane.y = old_plane.x * sin( rot_speed) + plane.y * cos( rot_speed )
 		
 	#print("dir_angle %.4f" % dir_angle)
-	dir_vec = Vector2(cos(dir_angle), sin(dir_angle))
+	#dir_vec = Vector2(cos(dir_angle), sin(dir_angle))
 	#plane = dir_vec.orthogonal()
 	
 
@@ -157,8 +181,8 @@ func _draw() -> void:
 		#double rayDirX = dirX + planeX*cameraX;
 		#double rayDirY = dirY + planeY*cameraX;
 		var camera_x := (2.0 * x / float(SCREEN_W)) - 1.0  # -1..1 across screen
-		var ray_angle := dir_angle + atan(camera_x * tan(FOV * 0.5) * 2.0)
-		var ray_dir := Vector2(cos(ray_angle), sin(ray_angle))
+		#var ray_angle := dir_angle + atan(camera_x * tan(FOV * 0.5) * 2.0)
+		var ray_dir := Vector2( dir.x + plane.x * camera_x, dir.y + plane.y * camera_x )
 		#print("Pos: " + str(pos))
 		#//which box of the map we're in
 		#int mapX = int(posX);
