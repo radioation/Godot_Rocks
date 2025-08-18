@@ -15,8 +15,10 @@ const TILE : float= 1.0               # map cell size (world units)
 @export var wall_texture2: Texture2D
 @export var wall_texture3: Texture2D
 @export var wall_texture4: Texture2D
+@export var sprite_texture: Texture2D
 
 @export	var wall_tex_size : Vector2
+@export	var sprite_tex_size : Vector2
 @export	var half_h : float
 
 @export var move_speed_d :float = 2.5
@@ -53,20 +55,34 @@ var world_map := [
 #double posX = 22.0, posY = 11.5;  //x and y start position
 #double dirX = -1.0, dirY = 0.0; //initial direction vector (180 == PI)
 #double planeX = 0.0, planeY = 0.66; //the 2d raycaster version of camera plane
-var pos := Vector2(5.8,1.8)    #  X and Y start position 
+var pos := Vector2(4.8,21.8)    #  X and Y start position 
 #var dir_angle := PI           # radians
 #var dir_vec : Vector2
 var dir: = Vector2( -1.0, 0.0 )
 var plane: = Vector2( 0.0, 0.66 )
 
+# Spreite state
+var z_buffer := PackedFloat32Array() # for checking sprite depth when we draw them.
+var sprites := PackedVector2Array() # for sprite positions 
+var sprite_order := PackedInt32Array() 
+var sprite_distance := PackedFloat32Array() 
+var sprite_sort_space := PackedVector2Array()
 
-var zbuffer := PackedFloat32Array() # for sprite depth when we add them.
-
-  
 func _ready() -> void:
-	zbuffer.resize(screen_w)
+	z_buffer.resize(screen_w)
+	sprites.append( Vector2( 4.0, 22.0))
+	sprites.append( Vector2( 4.0, 20.0))
+	sprites.append( Vector2( 3.0, 18.0))
+	sprites.append( Vector2( 4.0, 16.0))
+	sprites.append( Vector2( 4.0, 14.0))
+	
+	sprite_order.resize(sprites.size())
+	sprite_distance.resize(sprites.size())
+	sprite_sort_space.resize(sprites.size())
 	
 	wall_tex_size = wall_texture1.get_size() 
+	sprite_tex_size = sprite_texture.get_size()
+	
 	half_h = screen_h * 0.5
 	#dir_vec = Vector2(cos(dir_angle), sin(dir_angle))
 	 
@@ -167,7 +183,22 @@ func read_input(delta: float) -> void:
 
  
 
- 
+func sort_sprites() -> void:
+	var count = sprites.size()
+	var i :int = 0
+	while i < count: 
+		var j: int = i
+		while j > 0 and sprite_distance[j-1] < sprite_distance[j] :
+			var tmp:float = sprite_distance[j]
+			sprite_distance[j] = sprite_distance[j-1]
+			sprite_distance[j-1] = tmp
+			
+			var tmp_order = sprite_order[j]
+			sprite_order[j] = sprite_order[j-1]
+			sprite_order[j-1] = tmp_order
+			
+			j = j-1
+		i = i + 1
 
  
 func _draw() -> void:  
@@ -362,9 +393,117 @@ func _draw() -> void:
 			src_rect,                 # no tile
 			Color(shade, shade, shade, 1.0)
 		)
+		
+		# for sprite casting
+		z_buffer[x] = perp_wall_dist 
+		
+		
+	#//SPRITE CASTING
+	#//sort sprites from far to close
+	#for(int i = 0; i < numSprites; i++)
+	#{
+	#spriteOrder[i] = i;
+	#spriteDistance[i] = ((posX - sprite[i].x) * (posX - sprite[i].x) + (posY - sprite[i].y) * (posY - sprite[i].y)); //sqrt not taken, unneeded
+	#}
+	#sortSprites(spriteOrder, spriteDistance, numSprites);
+	for i in range( sprites.size() ) :
+		sprite_order[i] = i
+		sprite_distance[i] = (pos.x - sprites[i].x)* (pos.x - sprites[i].x) + (pos.y - sprites[i].y) * (pos.y - sprites[i].y)
+	
+	sort_sprites()
+	
+	
+	#//after sorting the sprites, do the projection and draw them
+	#for(int i = 0; i < numSprites; i++)
+	#{
+	for i in range( sprites.size() ) :
+		#//translate sprite position to relative to camera
+		#double spriteX = sprite[spriteOrder[i]].x - posX;
+		#double spriteY = sprite[spriteOrder[i]].y - posY;
+		var sprite_pos = sprites[sprite_order[i]] - pos
+		
+		#//transform sprite with the inverse camera matrix
+		#// [ planeX   dirX ] -1                                       [ dirY      -dirX ]
+		#// [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
+		#// [ planeY   dirY ]                                          [ -planeY  planeX ]
+		#
+		#double invDet = 1.0 / (planeX * dirY - dirX * planeY); //required for correct matrix multiplication
+		#double transformX = invDet * (dirY * spriteX - dirX * spriteY);
+		#double transformY = invDet * (-planeY * spriteX + planeX * spriteY); //this is actually the depth inside the screen, that what Z is in 3D, the distance of sprite to player, matching sqrt(spriteDistance[i])
+		#int spriteScreenX = int((w / 2) * (1 + transformX / transformY));
+		var inv_det : float = 1.0 / ( plane.x * dir.y - dir.x * plane.y) 
+		var transform_x = inv_det * ( dir.y * sprite_pos.x - dir.x * sprite_pos.y )
+		var transform_y = inv_det * ( -plane.y * sprite_pos.x + plane.x * sprite_pos.y )
+		
+		var sprite_screen_x = int ( (screen_w/2) * ( 1 + transform_x/ transform_y))
+		#//parameters for scaling and moving the sprites
+		##define uDiv 1
+		##define vDiv 1
+		##define vMove 0.0
+		#int vMoveScreen = int(vMove / transformY);
+		var v_move: float = 0.0
+		var v_move_screen : int = int ( v_move / transform_y) 
+		#//calculate height of the sprite on screen
+		#int spriteHeight = abs(int(h / (transformY))) / vDiv; //using "transformY" instead of the real distance prevents fisheye
+		#//calculate lowest and highest pixel to fill in current stripe
+		#int drawStartY = -spriteHeight / 2 + h / 2 + vMoveScreen;
+		#if(drawStartY < 0) drawStartY = 0;
+		#int drawEndY = spriteHeight / 2 + h / 2 + vMoveScreen;
+		#if(drawEndY >= h) drawEndY = h - 1;
+		var sprite_height = abs( int (screen_h/ transform_y))
+		var sprite_draw_start := int( half_h - sprite_height/2) + v_move_screen
+		
+		
+		#//calculate width of the sprite
+		#int spriteWidth = abs(int (h / (transformY))) / uDiv; // same as height of sprite, given that it's square
+		#int drawStartX = -spriteWidth / 2 + spriteScreenX;
+		#if(drawStartX < 0) drawStartX = 0;
+		#int drawEndX = spriteWidth / 2 + spriteScreenX;
+		#if(drawEndX > w) drawEndX = w;
+		var sprite_width = sprite_height # abs( int( screen_h / transform_y))
+		var draw_start_x = - sprite_width / 2 + sprite_screen_x
+		if draw_start_x < 0 :
+			draw_start_x = 0
+		var draw_end_x = sprite_width /2 + sprite_screen_x 
+		if draw_end_x > screen_w: 
+			draw_end_x = screen_w
+		
+		var sprite_shade : float= clamp(1.0 / (0.6 + transform_y * 0.25), 0.2, 1.0)
+		#//loop through every vertical stripe of the sprite on screen
+		#for(int stripe = drawStartX; stripe < drawEndX; stripe++)
+		#{
+		for current_stripe in range( draw_start_x, draw_end_x, 1 ):
+			
+			#int texX = int(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * texWidth / spriteWidth) / 256;
+			var texture_x = int(256 * (current_stripe - (-sprite_width / 2 + sprite_screen_x)) * sprite_tex_size.x / sprite_width) / 256;
+			var sprite_src_rect := Rect2(texture_x, 0, 1, sprite_tex_size.y)
+			#//the conditions in the if are:
+			#//1) it's in front of camera plane so you don't see things behind you
+			#//2) ZBuffer, with perpendicular distance
+			#if(transformY > 0 && transformY < ZBuffer[stripe])
+			#{
+			if transform_y > 0 and transform_y < z_buffer[current_stripe]:
+				var sprite_dest_rect := Rect2(current_stripe, sprite_draw_start, 1, sprite_height)  # 1 pixel wide column
+				draw_texture_rect_region(sprite_texture,
+				sprite_dest_rect,
+				sprite_src_rect,
+				Color(sprite_shade, sprite_shade, sprite_shade, 1.0) )             
+		 
 
-		#zbuffer[x] = perp_dist
+	
+		  #for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
+		  #{
+			#int d = (y - vMoveScreen) * 256 - h * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
+			#int texY = ((d * texHeight) / spriteHeight) / 256;
+			#Uint32 color = texture[sprite[spriteOrder[i]].texture][texWidth * texY + texX]; //get current color from the texture
+			#if((color & 0x00FFFFFF) != 0) buffer[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color
+		  #}
+		#}
+	  #}
+	#}
 
+
+			
+			
  
-
  
