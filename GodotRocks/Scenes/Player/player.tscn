@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://dm7abuytgx7os"]
+[gd_scene load_steps=75 format=3 uid="uid://dm7abuytgx7os"]
 
 [ext_resource type="Script" uid="uid://bws1ciykln34d" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://cf1qu800wro2d" path="res://assets/sprites/Ship_000.png" id="1_uvnfx"]
@@ -73,6 +73,20 @@
 [ext_resource type="AudioStream" uid="uid://bp31awgskklgy" path="res://assets/sounds/thruster_clip.wav" id="70_rbwwl"]
 [ext_resource type="Texture2D" uid="uid://dwnjjd8y5dqob" path="res://assets/sprites/greenball.png" id="72_geihd"]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_geihd"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(-1, 0, 0)
+spread = 0.0
+initial_velocity_min = 6.33
+initial_velocity_max = 80.0
+gravity = Vector3(0, 0, 0)
+damping_max = 38.46
+color = Color(1, 1, 0.635294, 1)
+hue_variation_min = -2.23517e-08
+hue_variation_max = -2.23517e-08
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_uvnfx"]
 radius = 17.1172
 
@@ -82,12 +96,27 @@ script = ExtResource("1_a3d8c")
 green_shot_scene = ExtResource("3_rbwwl")
 blue_shot_scene = ExtResource("3_hlqkp")
 
+[node name="MinimapSprite" type="Sprite2D" parent="."]
+visibility_layer = 2
+scale = Vector2(2, 2)
+texture = ExtResource("72_geihd")
+
+[node name="ThrusterParticles" type="GPUParticles2D" parent="."]
+position = Vector2(-23, 0)
+scale = Vector2(2, 2)
+amount = 16
+lifetime = 0.02
+interp_to_end = 0.042
+randomness = 0.34
+process_material = SubResource("ParticleProcessMaterial_geihd")
+
 [node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_dbngi")
 
 [node name="SecondaryShotCooldownTimer" type="Timer" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_uvnfx")
 script = ExtResource("3_xpcdj")
@@ -121,11 +150,6 @@ stream = ExtResource("70_rbwwl")
 volume_db = -3.564
 
 [node name="Timer" type="Timer" parent="."]
-
-[node name="MinimapSprite" type="Sprite2D" parent="."]
-visibility_layer = 2
-scale = Vector2(2, 2)
-texture = ExtResource("72_geihd")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="SecondaryShotCooldownTimer" to="." method="_on_secondary_shot_cooldown_timer_timeout"]

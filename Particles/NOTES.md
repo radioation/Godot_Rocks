@@ -35,6 +35,10 @@ ONce you have the CanvasItemMaterial configured, you need to configure the anima
 * `Drawing > draw order`  : affects who's on top. Lifetme probably best, in that new ones
      are on top. Index gives animated textures a more random look
 
+* `Process Material > Spawn > position` control where it spans
+* `Process Material > Spawn > Velocity > Direction` 
+* `Process Material > Spawn > Velocity > Initial Velocity`
+
 
 * `Process Material > Animated Velocity > Radial Velocity` (seems good for explosions )
 * `Process Material > Animated Velocity > Orbit Velocity` whirlpool flow
@@ -43,4 +47,4 @@ ONce you have the CanvasItemMaterial configured, you need to configure the anima
 
 
 
-* 
+

@@ -41,7 +41,8 @@ func _ready() -> void:
 	#$ShotCooldownTimer.wait_time = 0;
 	radius = $CollisionShape2D.shape.radius
 	half_screen = get_viewport().size / 2.0
- 
+	
+	$ThrusterParticles.emitting = false
 func _process(delta: float) -> void:
 	read_input()
  
@@ -98,10 +99,12 @@ func _physics_process(delta: float) -> void:
 	
 func read_input() -> void:
 	thrust = 0.0
+	$ThrusterParticles.emitting = false
 	if curr_state in [ INIT, DEAD ]:
 		return
 	if Input.is_action_pressed("thrust"):
 		thrust = acceleration * Input.get_action_strength("thrust")
+		$ThrusterParticles.emitting = true
 	else:
 		$ThrustSound.stop() 
 			
