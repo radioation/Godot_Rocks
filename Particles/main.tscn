@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdkchfdu21r4v"]
+
+[ext_resource type="Texture2D" uid="uid://bpsp5ls65g47o" path="res://red_shot.png" id="1_ig7tw"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0xm2m"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7dm0k"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+
+[node name="Main" type="Node2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(229, 173)
+process_material = SubResource("ParticleProcessMaterial_0xm2m")
+
+[node name="TexturedGPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(445, 186)
+texture = ExtResource("1_ig7tw")
+process_material = SubResource("ParticleProcessMaterial_7dm0k")
