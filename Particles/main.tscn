@@ -1,22 +1,72 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdkchfdu21r4v"]
+[gd_scene load_steps=7 format=3 uid="uid://cdkchfdu21r4v"]
 
 [ext_resource type="Texture2D" uid="uid://bpsp5ls65g47o" path="res://red_shot.png" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://plihsnhxag2h" path="res://BOOM_9f_256w.png" id="2_0xm2m"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0xm2m"]
 particle_flag_disable_z = true
+angle_min = -282.6
+angle_max = 226.7
+radial_velocity_min = 38.61
+radial_velocity_max = 38.61
 gravity = Vector3(0, 98, 0)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7dm0k"]
 particle_flag_disable_z = true
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = 11.12
+orbit_velocity_min = 9.49949e-08
+orbit_velocity_max = 9.49949e-08
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 115.83
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0xm2m"]
+particles_animation = true
+particles_anim_h_frames = 9
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h2yge"]
+lifetime_randomness = 0.15
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+angular_velocity_min = 5.35998
+angular_velocity_max = 40.0
+radial_velocity_min = -53.82
+radial_velocity_max = 112.85
 gravity = Vector3(0, 98, 0)
+scale_min = 0.1
+scale_max = 0.25
+anim_speed_min = 7.92
+anim_speed_max = 8.07
+turbulence_enabled = true
+turbulence_noise_strength = 7.9
 
 [node name="Main" type="Node2D"]
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(229, 173)
+amount = 9
+explosiveness = 1.0
+randomness = 0.03
+trail_enabled = true
+trail_lifetime = 0.15
 process_material = SubResource("ParticleProcessMaterial_0xm2m")
 
 [node name="TexturedGPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(445, 186)
+position = Vector2(707, 184)
 texture = ExtResource("1_ig7tw")
+draw_order = 2
 process_material = SubResource("ParticleProcessMaterial_7dm0k")
+
+[node name="AnimGPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_0xm2m")
+position = Vector2(421, 211)
+amount = 15
+texture = ExtResource("2_0xm2m")
+lifetime = 1.26
+draw_order = 0
+trail_lifetime = 0.23
+process_material = SubResource("ParticleProcessMaterial_h2yge")
