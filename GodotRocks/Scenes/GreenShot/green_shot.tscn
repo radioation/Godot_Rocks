@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dk3emfvbayel6"]
+[gd_scene load_steps=8 format=3 uid="uid://dk3emfvbayel6"]
 
 [ext_resource type="Script" uid="uid://be2nbdkmh8avt" path="res://Scenes/GreenShot/green_shot.gd" id="1_5fqdj"]
 [ext_resource type="Texture2D" uid="uid://cvf3t5w1thxkg" path="res://assets/sprites/green_shot.png" id="1_5k28d"]
@@ -7,6 +7,31 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5k28d"]
 radius = 2.0
 height = 10.0
+
+[sub_resource type="Gradient" id="Gradient_ttsv0"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.838384, 0.996633, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.36512, 0.36512, 0.36512, 1, 0.340141, 0.340141, 0.340141, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1r6ts"]
+gradient = SubResource("Gradient_ttsv0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ttsv0"]
+particle_flag_disable_z = true
+angle_min = -27.3
+angle_max = 720.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 559.56
+initial_velocity_max = 623.27
+radial_velocity_min = 63.85
+radial_velocity_max = 63.85
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.0
+radial_accel_max = 2.0
+scale_min = 0.1
+scale_max = 0.1
+color_ramp = SubResource("GradientTexture1D_1r6ts")
 
 [node name="GreenShot" type="Area2D"]
 script = ExtResource("1_5fqdj")
@@ -24,6 +49,16 @@ shape = SubResource("CapsuleShape2D_5k28d")
 
 [node name="ShotSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_ttsv0")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 16
+texture = ExtResource("1_5k28d")
+lifetime = 0.1
+one_shot = true
+explosiveness = 0.79
+trail_lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_ttsv0")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

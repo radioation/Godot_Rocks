@@ -47,4 +47,3 @@ ONce you have the CanvasItemMaterial configured, you need to configure the anima
 
 
 
-

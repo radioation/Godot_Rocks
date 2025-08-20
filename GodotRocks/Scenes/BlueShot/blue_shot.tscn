@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://csdh4lnfspa7f"]
+[gd_scene load_steps=6 format=3 uid="uid://csdh4lnfspa7f"]
 
 [ext_resource type="Texture2D" uid="uid://ry3q41r2e5nm" path="res://assets/sprites/blue_shot.png" id="1_4nwni"]
 [ext_resource type="Script" uid="uid://b1ad4he5pr5bc" path="res://Scenes/BlueShot/blue_shot.gd" id="1_beu2w"]
@@ -7,6 +7,18 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4nwni"]
 radius = 1.0
 height = 10.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ksyal"]
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 343.49
+initial_velocity_max = 664.82
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = -2.23517e-05
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.1
 
 [node name="BlueShot" type="Area2D"]
 script = ExtResource("1_beu2w")
@@ -25,6 +37,15 @@ shape = SubResource("CapsuleShape2D_4nwni")
 [node name="ShotSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ksyal")
 volume_db = -25.224
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 10
+texture = ExtResource("1_4nwni")
+lifetime = 0.15
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ksyal")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

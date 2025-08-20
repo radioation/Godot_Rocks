@@ -16,7 +16,11 @@ func start(xform ) -> float:
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	$GPUParticles2D.finished.connect( _on_particles_finished)
+
+func _on_particles_finished():
+	# Free the bullet node after the particles have finished
+	queue_free()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,8 +34,10 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func _on_area_entered(area: Area2D) -> void: 
 	if area.is_in_group("ufos"):
-		area.hit(shot_damage)
-		queue_free()
+		area.hit(shot_damage)  
+		$GPUParticles2D.emitting = true 
+		$Sprite2D.visible = false
 	if area.is_in_group("rocks"):
-		area.hit(shot_damage)
-		queue_free()
+		area.hit(shot_damage)  
+		$GPUParticles2D.emitting = true 
+		$Sprite2D.visible = false
