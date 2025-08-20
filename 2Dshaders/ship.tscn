@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8ddmwe1qu2dl"]
+
+[ext_resource type="Shader" uid="uid://baxwfye2057sw" path="res://ship.gdshader" id="1_4cq66"]
+[ext_resource type="Texture2D" uid="uid://v3bhkmwldkp8" path="res://Ship_000.png" id="1_l3rv8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v4325"]
+shader = ExtResource("1_4cq66")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4cq66"]
+shader = ExtResource("1_4cq66")
+
+[node name="Ship" type="Node2D"]
+material = SubResource("ShaderMaterial_v4325")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_4cq66")
+position = Vector2(279, 126)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_l3rv8")

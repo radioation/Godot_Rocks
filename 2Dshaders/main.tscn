@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtkhxhtm5br5a"]
+
+[ext_resource type="PackedScene" uid="uid://ch5mdgv3atym8" path="res://ufo.tscn" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://qiio7xxgpjub" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://c8ddmwe1qu2dl" path="res://ship.tscn" id="2_h2yge"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_h2yge")
+
+[node name="UFO" parent="." instance=ExtResource("1_0xm2m")]
+position = Vector2(577, 193)
+
+[node name="Ship" parent="." instance=ExtResource("2_h2yge")]

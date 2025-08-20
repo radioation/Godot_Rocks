@@ -1,0 +1,93 @@
+[gd_scene load_steps=15 format=3 uid="uid://ch5mdgv3atym8"]
+
+[ext_resource type="Texture2D" uid="uid://drrvoq0bxj44w" path="res://combinedUFO_8f_256w.png" id="1_c0rv2"]
+[ext_resource type="Shader" uid="uid://bcqfeb7rf43o0" path="res://ufo.gdshader" id="1_lwnds"]
+[ext_resource type="Script" uid="uid://biprn82vxwwh4" path="res://ufo.gd" id="2_7har2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7har2"]
+shader = ExtResource("1_lwnds")
+shader_parameter/line_thickness = 1.0
+shader_parameter/line_spacing = 5.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+shader_parameter/ind = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lwnds"]
+shader = ExtResource("1_lwnds")
+shader_parameter/line_thickness = 1.0
+shader_parameter/line_spacing = 5.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+shader_parameter/ind = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwnds"]
+atlas = ExtResource("1_c0rv2")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7har2"]
+atlas = ExtResource("1_c0rv2")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vg23t"]
+atlas = ExtResource("1_c0rv2")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bh5go"]
+atlas = ExtResource("1_c0rv2")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rit6l"]
+atlas = ExtResource("1_c0rv2")
+region = Rect2(1024, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7foj"]
+atlas = ExtResource("1_c0rv2")
+region = Rect2(1280, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u063t"]
+atlas = ExtResource("1_c0rv2")
+region = Rect2(1536, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rp6wq"]
+atlas = ExtResource("1_c0rv2")
+region = Rect2(1792, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wugmh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lwnds")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7har2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vg23t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bh5go")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rit6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7foj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u063t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rp6wq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="UFO" type="Node2D"]
+material = SubResource("ShaderMaterial_7har2")
+script = ExtResource("2_7har2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_lwnds")
+sprite_frames = SubResource("SpriteFrames_wugmh")
+autoplay = "default"
+frame_progress = 0.517219
