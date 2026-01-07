@@ -12,7 +12,7 @@ config_version=5
 
 config/name="CRASH_BOOM_01"
 run/main_scene="uid://chvevjwj07dg2"
-config/features=PackedStringArray("4.4", "Mobile")
+config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
 [display]
