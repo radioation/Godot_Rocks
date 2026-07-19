@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dschjhap3lsne"]
+[gd_scene format=3 uid="uid://dschjhap3lsne"]
 
 [ext_resource type="Script" uid="uid://mytt7mevyfc5" path="res://Scenes/HUD/hud.gd" id="1_33i1w"]
+[ext_resource type="Texture2D" uid="uid://dthkfgiyu5l70" path="res://icon.svg" id="2_5aai8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipdwu"]
 bg_color = Color(0.237539, 0.237539, 0.237539, 1)
@@ -9,39 +10,13 @@ corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
-[node name="HUD" type="CanvasLayer"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_5qnr5"]
+radius = 75.16
+
+[node name="HUD" type="CanvasLayer" unique_id=152582772]
 script = ExtResource("1_33i1w")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 40
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="ScoreLabel" type="Label" parent="MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.819023, 0.818067, 3.85046e-07, 1)
-theme_override_font_sizes/font_size = 32
-text = "SCORE: "
-
-[node name="LivesLabel" type="Label" parent="MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_colors/font_color = Color(0.819608, 0.819608, 0, 1)
-theme_override_font_sizes/font_size = 32
-text = "LIVES: 3"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1649032697]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
@@ -52,8 +27,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 10
+metadata/_edit_lock_ = true
 
-[node name="MessageLabel" type="Label" parent="VBoxContainer"]
+[node name="MessageLabel" type="Label" parent="VBoxContainer" unique_id=1622687372]
 layout_mode = 2
 size_flags_vertical = 2
 theme_override_colors/font_color = Color(0.819608, 0.819608, 0, 1)
@@ -61,7 +37,7 @@ theme_override_font_sizes/font_size = 72
 text = "Godot ROCKS!"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=630653212]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -69,4 +45,88 @@ theme_override_colors/font_color = Color(0.819608, 0.819608, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_ipdwu")
+action_mode = 0
 text = " START "
+
+[node name="VirtualJoystick" type="VirtualJoystick" parent="." unique_id=1067173418]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 130.0
+offset_top = -352.0
+offset_right = 401.0
+offset_bottom = -105.0
+grow_vertical = 0
+joystick_mode = 1
+joystick_size = 250.0
+tip_size = 150.0
+action_left = &"left"
+action_right = &"right"
+
+[node name="VirtualJoystick2" type="VirtualJoystick" parent="." unique_id=2135549430]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -372.0
+offset_top = -526.0
+offset_right = -94.0
+offset_bottom = -290.0
+grow_horizontal = 0
+grow_vertical = 0
+joystick_mode = 1
+joystick_size = 250.0
+tip_size = 150.0
+action_left = &"left_2nd"
+action_right = &"right_2nd"
+action_up = &"up_2nd"
+action_down = &"down_2nd"
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1891534328]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+metadata/_edit_lock_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1715842428]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1562749898]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.819023, 0.818067, 3.85046e-07, 1)
+theme_override_font_sizes/font_size = 32
+text = "SCORE: "
+
+[node name="LivesLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=6508085]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "LIVES: 3"
+
+[node name="Control" type="Control" parent="." unique_id=887837839]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control" unique_id=366816846]
+position = Vector2(-171, 107)
+texture_normal = ExtResource("2_5aai8")
+shape = SubResource("CircleShape2D_5qnr5")
+action = "shoot"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
