@@ -127,6 +127,6 @@ grow_horizontal = 0
 position = Vector2(-171, 107)
 texture_normal = ExtResource("2_5aai8")
 shape = SubResource("CircleShape2D_5qnr5")
-action = "shoot"
+action = "thrust"
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
